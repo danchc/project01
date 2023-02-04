@@ -1,105 +1,118 @@
 import 'package:flutter/material.dart';
+import 'package:project01/components/my-textfield.dart';
 import 'package:project01/components/my-button.dart';
+import 'package:project01/components/my-square-image.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({Key? key}) : super(key: key);
 
-  //metodo per login
-  void signUserIn() {}
-
-  //metodo per signup
-  void signUserUp() {}
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  void signIn() {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //colore background
+
+      //colore sfondo
       backgroundColor: Colors.grey[300],
 
-      //corpo principale organizzato a colonna
+      //corpo
       body: SafeArea(
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 80),
-
-              //logo
-              Image.asset(
-                'assets/images/mainicon.png',
-                height: 200,
-              ),
-
               const SizedBox(height: 50),
 
-              //testo
-              const Text(
-                'Benvenuto!',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Barlow'),
+              //testo iniziale
+              const Text('Bentornato!',
+                style:
+                TextStyle(
+                  fontFamily: 'Barlow',
+                  fontSize: 50,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 80,),
 
-              //sottotitolo
-              const Text(
-                'Sei pronto ad accettare la sfida?',
-                style: TextStyle(
-                    color: Colors.black, fontSize: 20, fontFamily: 'Barlow'),
-              ),
+              // zona input
+              Container(
+                child: Column(
+                  children: [
 
-              const SizedBox(height: 25),
+                    //email input
+                    MyTextField(nome: 'Inserisci la tua e-mail', hide: false, controller: emailController),
 
-              //bottoni
-              MyButton(name: 'Login', onTap: signUserIn),
+                    const SizedBox(height: 20,),
 
-              const SizedBox(height: 50),
+                    //password input
+                    MyTextField(nome: 'Inserisci la tua password', hide: true, controller: passwordController),
 
-              //divisore
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(children: [
-                  Expanded(
-                    child: Divider(
-                      thickness: 0.5,
-                      color: Colors.grey[400],
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                        child: Text(
+                            'Hai dimenticato la password?',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Barlow',
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Text(
-                      'Oppure',
-                      style: TextStyle(color: Colors.grey[700]),
+
+                    const SizedBox(height: 40),
+
+                    //bottone invio
+                    MyButton(name: 'Login', onTap: signIn),
+
+                    const SizedBox(height: 50,),
+
+                    //servizi
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+
+                        //google
+                        SquareImage(image: 'assets/images/google.png'),
+
+                        SizedBox(width:30),
+
+                        //apple
+                        SquareImage(image: 'assets/images/apple.png'),
+
+                      ],
                     ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      thickness: 0.5,
-                      color: Colors.grey[400],
-                    ),
-                  ),
-                ]),
-              ),
 
-              const SizedBox(height: 50),
+                    const SizedBox(height: 70,),
 
-              //bottone registrazione
-              MyButton(name: 'Sign Up', onTap: signUserUp),
+                    //dicitura finale
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Non sei ancora un membro?',
+                          style: TextStyle(
+                            fontFamily: 'Barlow',
+                          ),
+                        ),
 
-              const SizedBox(height: 50),
-
-              //copyright
-              Center(
-                child: Text(
-                  '© Daniel Checchia',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontFamily: 'Barlow',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
+                        Text(
+                          ' Registrati!',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Barlow',
+                          ),
+                        )
+                      ],
+                    )
+                  ],
                 ),
               )
             ],
