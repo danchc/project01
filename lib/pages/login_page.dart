@@ -22,7 +22,16 @@ class LoginPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 50),
+              //zona tasto indietro
+              AppBar(
+                leading: const BackButton(
+                  color: Colors.black,
+                ),
+                backgroundColor: Colors.grey[300],
+                elevation: 0,
+              ),
+
+              const SizedBox(height: 30),
 
               //testo iniziale
               const Text('Bentornato!',

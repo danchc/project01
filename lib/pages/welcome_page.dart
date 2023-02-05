@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project01/components/my-button.dart';
 import 'package:project01/pages/login_page.dart';
+import 'package:project01/pages/register_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -58,7 +59,7 @@ class WelcomePage extends StatelessWidget {
                   onTap: () => {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => LoginPage())),
-                  print("Card tapped.")
+                  //print("Card tapped.")
               }),
 
               const SizedBox(height: 50),
@@ -92,7 +93,14 @@ class WelcomePage extends StatelessWidget {
               const SizedBox(height: 50),
 
               //bottone registrazione
-              MyButton(name: 'Sign Up', onTap: signUserUp),
+              MyButton(name: 'Sign Up',
+                  onTap: () =>
+                  {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => RegisterPage())
+                    ),
+                  }
+              ),
 
               const SizedBox(height: 50),
 
