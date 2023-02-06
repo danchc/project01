@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       /* colore background */
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.grey[200],
 
       /* corpo principale */
       body: SafeArea(
@@ -51,32 +51,18 @@ class _HomePageState extends State<HomePage> {
                 /* header */
                 Container(
                   width: double.infinity,
-                  height: 250,
+                  height: 120,
                   child: Center(
                     child: Container(
                       color: Colors.black87,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            width: 150,
-                            alignment: Alignment.center,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-                            child: const Text(
-                              'U',
-                              style: TextStyle(
-                                fontSize: 90,
-                              ),
-                            ),
-                          ),
 
                           /* frase saluto */
                           Container(
                             alignment: Alignment.center,
-                            child: ora < 13?
+                            child: ora > 13?
                             const Text(
                               'Buongiorno!',
                               style: TextStyle(
@@ -97,26 +83,58 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
+
+                          Container(
+                            width: 80,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: const Text(
+                              'U',
+                              style: TextStyle(
+                                fontSize: 40,
+                              ),
+                            ),
+                          ),
+
+
                         ],
                       ),
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 40,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
+                  child: Container(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: const Text(
+                      'Il tuo sommario ',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Barlow',
+                      ),
+                    ),
+                  ),
+                ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
 
-                    MyCard(descrizione: 'Allenamenti', colore: Colors.deepOrange),
-                    MyCard(descrizione: 'Nutrizione', colore: Colors.lightGreen),
+                    MyCard(descrizione: 'I tuoi allenamenti', colore: Colors.white, icona: Icons.sports_gymnastics,),
+                    MyCard(descrizione: 'La tua dieta', colore: Colors.white, icona: Icons.emoji_food_beverage),
 
                   ],
                 ),
 
 
-                const SizedBox(height: 200,),
+                const SizedBox(height: 15,),
 
 
                 /* body */
@@ -124,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Center(
                       child: SvgPicture.asset('assets/images/void.svg',
-                        height: 200,),
+                        height: 170,),
                     ),
 
                     const Padding(
