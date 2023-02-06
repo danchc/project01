@@ -1,8 +1,11 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:mcproject/constants/constants.dart';
+import 'package:mcproject/components/my-card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,6 +15,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  String formattedTime = DateFormat.yMMMEd().format(DateTime.now());
+  var ora = int.parse(DateFormat.H().format(DateTime.now()));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,14 +31,93 @@ class _HomePageState extends State<HomePage> {
           child: Center(
             child: Column(
               children: [
+                /* giorno della settimana */
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  color: Colors.black87,
+                  child: Text(
+                    formattedTime,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Barlow',
+                      fontSize: 20,
+                      color: Colors.white
+                    ),
+                  ),
+                ),
 
                 /* header */
                 Container(
-                  color: Colors.grey[600],
-                  height: 300,
+                  width: double.infinity,
+                  height: 250,
+                  child: Center(
+                    child: Container(
+                      color: Colors.black87,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            width: 150,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: const Text(
+                              'U',
+                              style: TextStyle(
+                                fontSize: 90,
+                              ),
+                            ),
+                          ),
+
+                          /* frase saluto */
+                          Container(
+                            alignment: Alignment.center,
+                            child: ora < 13?
+                            const Text(
+                              'Buongiorno!',
+                              style: TextStyle(
+                                fontFamily: 'Barlow',
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ):
+
+                            const Text(
+                              'Buonasera!',
+                              style: TextStyle(
+                                fontFamily: 'Barlow',
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
 
-                const SizedBox(height: 80,),
+                const SizedBox(height: 40,),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const [
+
+                    MyCard(descrizione: 'Allenamenti', colore: Colors.deepOrange),
+                    MyCard(descrizione: 'Nutrizione', colore: Colors.lightGreen),
+
+                  ],
+                ),
+
+
+                const SizedBox(height: 200,),
+
 
                 /* body */
                 Column(
@@ -62,13 +148,12 @@ class _HomePageState extends State<HomePage> {
 
       /* nav bar */
       bottomNavigationBar: Container(
-        color: Colors.black,
+        color: Colors.black87,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
           child: GNav(
             haptic: true,
             tabActiveBorder: Border.all(color: Colors.white, width: 1),
-            backgroundColor: Colors.black,
             color: Colors.white,
             activeColor: Colors.white,
             gap: 8,
