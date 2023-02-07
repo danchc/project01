@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mcproject/pages/logged/home.dart';
+import 'package:mcproject/pages/logged/home_page.dart';
 import '/components/my-textfield.dart';
 import '/components/my-button.dart';
 import '/components/my-square-image.dart';
@@ -78,7 +80,12 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 40),
 
                     //bottone invio
-                    MyButton(name: 'Login', onTap: signIn),
+                    MyButton(
+                        name: 'Invio',
+                        onTap: () => {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => const HomePage()))
+                        }),
 
                     const SizedBox(height: 50,),
 
