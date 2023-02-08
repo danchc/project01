@@ -12,11 +12,14 @@ class WelcomePage extends StatelessWidget {
   //metodo per signup
   void signUserUp() {}
 
+  //colore principale
+  static const color = Color(0xff2b8efd);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //colore background
-      backgroundColor: Colors.grey[300],
+      backgroundColor: color,
 
       //corpo principale organizzato a colonna
       body: SafeArea(
@@ -37,19 +40,19 @@ class WelcomePage extends StatelessWidget {
               const Text(
                 'Benvenuto!',
                 style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Barlow'),
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 17),
 
               //sottotitolo
               const Text(
                 'Sei pronto ad accettare la sfida?',
                 style: TextStyle(
-                    color: Colors.black, fontSize: 20, fontFamily: 'Barlow'),
+                    color: Colors.white, fontSize: 20, fontFamily: 'Barlow'),
               ),
 
               const SizedBox(height: 25),
@@ -78,7 +81,7 @@ class WelcomePage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
                       'Oppure',
-                      style: TextStyle(color: Colors.grey[700]),
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                   Expanded(
@@ -109,9 +112,8 @@ class WelcomePage extends StatelessWidget {
                 child: Text(
                   '© Daniel Checchia',
                   style: TextStyle(
-                    color: Colors.grey[600],
+                    color: Colors.white,
                     fontFamily: 'Barlow',
-                    fontWeight: FontWeight.bold,
                     fontSize: 15,
                   ),
                 ),

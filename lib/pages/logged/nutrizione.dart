@@ -21,15 +21,23 @@ class _NutrizioneState extends State<Nutrizione> {
           centerTitle: true,
           backgroundColor: colore,
       ),
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
+       body: SafeArea(
+         child: Center(
+           child: Column(
+             mainAxisAlignment: MainAxisAlignment.center,
+             children: [
 
-            ],
-          ),
-        ),
-      ),
+
+               Text(
+                 'Non ci sono schede nutrizione',
+                 style: TextStyle(
+                   fontSize: 15,
+                 ),
+               )
+             ],
+           ),
+         ),
+       ),
     );
   }
 }
