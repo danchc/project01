@@ -6,3 +6,4 @@ final Color = Colors.grey[300];
 final String? nameFont = 'Barlow';
 
 final colore = Colors.blueAccent;
+

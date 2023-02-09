@@ -39,6 +39,7 @@ class _AllenamentiState extends State<Allenamenti> {
         centerTitle: true,
         backgroundColor: colore,
         actions: [
+          /*
           GestureDetector(
             onTap: () => {
               log('add allenamento'),
@@ -51,56 +52,73 @@ class _AllenamentiState extends State<Allenamenti> {
                 size: 30,
               ),
             ),
-          ),
+          ),*/
         ],
       ),
 
 
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if(_data.isNotEmpty) ...[
-                DataTable(
-                  columns: _columnNames.map((columnName) {
-                    return DataColumn(
-                      label: Text(
-                        columnName,
-                        style: TextStyle(
-                            fontSize: 18
-                        ),
-                      ),
-                    );
-                  }).toList(),
-
-                  rows: _data.map((row) {
-                    return DataRow(
-                        cells: row.values.map((cellValue) {
-                          return DataCell(
-                            Text(
-                              cellValue,
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if(_data.isNotEmpty) ...[
+                    DataTable(
+                      columns: _columnNames.map((columnName) {
+                        return DataColumn(
+                          label: Text(
+                            columnName,
+                            style: TextStyle(
+                                fontSize: 18
                             ),
-                          );
-                        }).toList());
-                  }).toList(),
-                )
-              ] else ... [
+                          ),
+                        );
+                      }).toList(),
 
-                const Text(
-                  'Non ci sono ancora allenamenti',
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
-                )
-              ],
+                      rows: _data.map((row) {
+                        return DataRow(
+                            cells: row.values.map((cellValue) {
+                              return DataCell(
+                                Text(
+                                  cellValue,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
+                            }).toList());
+                      }).toList(),
+                    )
+                  ] else ... [
+                    Container(
+                      alignment: AlignmentDirectional.center,
+                      child:
+                        const Text(
+                          'Non ci sono ancora allenamenti',
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                          textAlign: TextAlign.center,
+                        )
 
-            ],
+                    ),
+                  ],
+
+                ],
+              ),
+            ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddAllenamentoPage()));
+        },
+        child: Icon(Icons.add),
       ),
     );
 
