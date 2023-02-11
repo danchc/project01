@@ -4,20 +4,25 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:mcproject/components/my-button.dart';
 import 'package:mcproject/components/my-textfield.dart';
+import 'package:mcproject/pages/logged/allenamenti.dart';
 
-class AddAllenamentoPage extends StatefulWidget {
-  const AddAllenamentoPage({Key? key}) : super(key: key);
+class AddAllenamento extends StatelessWidget {
 
-  @override
-  State<AddAllenamentoPage> createState() => _AddAllenamentoPageState();
-}
+  final controller;
+  VoidCallback onSave;
 
-class _AddAllenamentoPageState extends State<AddAllenamentoPage> {
+  AddAllenamento({
+    Key? key,
+    required this.controller,
+    required this.onSave
+  }) : super(key: key);
+
   //colore principale
   static const _textColor = Color.fromARGB(255, 11, 49, 93);
 
   /* controller */
   final nomeSchedaController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,28 +82,17 @@ class _AddAllenamentoPageState extends State<AddAllenamentoPage> {
 
               /* start zona input */
               const SizedBox(height: 25,),
-              MyTextField(nome: 'Nome scheda', hide: false, controller: nomeSchedaController),
+              MyTextField(nome: 'Nome scheda', hide: false, controller: controller),
 
               /* fine zona input */
               const SizedBox(height: 25,),
+
               MyButton(
                   name: 'Aggiungi',
-                  onTap: () => {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          if(nomeSchedaController.text.isNotEmpty) {
-                            return AlertDialog(content: Text(nomeSchedaController.text));
-                          } else {
-                            return const AlertDialog(
-                                content: Text('Devi inserire un nome!'),
-                            backgroundColor: Colors.red,);
-                          }
+                  onTap: onSave,
+              ),
 
-                        },
-                    ),
-                  }
-              )
+
             ],
           ),
         ),
