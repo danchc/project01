@@ -6,6 +6,7 @@ import 'package:mcproject/components/my-button.dart';
 import 'package:mcproject/components/my-textfield.dart';
 import 'package:mcproject/pages/logged/allenamenti.dart';
 
+
 class AddAllenamento extends StatelessWidget {
 
   final controller;

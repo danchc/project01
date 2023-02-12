@@ -5,6 +5,7 @@ import 'package:mcproject/components/my-schedaallenamento.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/pages/logged/add_allenamento.dart';
 
+
 class Allenamenti extends StatefulWidget {
 
   const Allenamenti({
@@ -32,24 +33,29 @@ class _AllenamentiState extends State<Allenamenti> {
     super.initState();
   }
 
-
-
   final  _controller = TextEditingController();
 
   //salva nuova scheda
   void saveNuovaScheda() {
     setState(() {
       schedeAllenamento.add(_controller.text);
-      log(schedeAllenamento.length.toString());
     });
     Navigator.of(context).pop();
   }
 
-  Future createNuovaScheda() {
-    return Navigator.push(context,
-        MaterialPageRoute(builder: (context) => AddAllenamento(controller: _controller, onSave: saveNuovaScheda)));
+  //funzione che riporta alla scheda per aggiungere scheda
+  void createNuovaScheda() {
+    showDialog(context: context, builder: (context) {return AddAllenamento(controller: _controller, onSave: saveNuovaScheda);});
 
   }
+
+  //funzione per eliminare scheda
+  void deleteScheda(int index) {
+    setState(() {
+      schedeAllenamento.removeAt(index);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,22 +68,6 @@ class _AllenamentiState extends State<Allenamenti> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: colore,
-        actions: [
-          /*
-          GestureDetector(
-            onTap: () => {
-              log('add allenamento'),
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddAllenamentoPage()))},
-            child: const Padding(
-              padding: EdgeInsets.only(right: 10.0),
-              child: Icon(
-                Icons.add,
-                size: 30,
-              ),
-            ),
-          ),*/
-        ],
       ),
 
 
@@ -85,7 +75,10 @@ class _AllenamentiState extends State<Allenamenti> {
           itemCount: schedeAllenamento.length,
           itemBuilder: (context,index) {
             // singola scheda
-            return MySchedaAllenamento(nomeScheda: schedeAllenamento[index].toString());
+            return MySchedaAllenamento(
+                nomeScheda: schedeAllenamento[index].toString(),
+                deleteFunction: (context) => deleteScheda(index),
+            );
           }
       ),
 
