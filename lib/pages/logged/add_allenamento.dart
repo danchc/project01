@@ -20,9 +20,6 @@ class AddAllenamento extends StatelessWidget {
   //colore principale
   static const _textColor = Color.fromARGB(255, 11, 49, 93);
 
-  /* controller */
-  final nomeSchedaController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {

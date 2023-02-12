@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:mcproject/components/my-schedaallenamento.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/pages/logged/add_allenamento.dart';
 
@@ -38,14 +39,15 @@ class _AllenamentiState extends State<Allenamenti> {
   //salva nuova scheda
   void saveNuovaScheda() {
     setState(() {
-      schedeAllenamento.add([_controller.text]);
+      schedeAllenamento.add(_controller.text);
+      log(schedeAllenamento.length.toString());
     });
     Navigator.of(context).pop();
   }
 
   Future createNuovaScheda() {
     return Navigator.push(context,
-    MaterialPageRoute(builder: (context) => AddAllenamento(controller: _controller, onSave: saveNuovaScheda)));
+        MaterialPageRoute(builder: (context) => AddAllenamento(controller: _controller, onSave: saveNuovaScheda)));
 
   }
 
@@ -55,7 +57,7 @@ class _AllenamentiState extends State<Allenamenti> {
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: const Text(
-          'Allenamenti'
+            'Allenamenti'
         ),
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -82,25 +84,8 @@ class _AllenamentiState extends State<Allenamenti> {
       body: ListView.builder(
           itemCount: schedeAllenamento.length,
           itemBuilder: (context,index) {
-
             // singola scheda
-            return Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Container(
-                color: Colors.white,
-                height: 80,
-                width: 500,
-                child: Text(
-                  schedeAllenamento[index],
-                  style: TextStyle(
-                    fontFamily: 'Barlow',
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-              ),
-            );
-
+            return MySchedaAllenamento(nomeScheda: schedeAllenamento[index].toString());
           }
       ),
 
@@ -113,7 +98,6 @@ class _AllenamentiState extends State<Allenamenti> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   if(_data.isNotEmpty) ...[
                     DataTable(
                       columns: _columnNames.map((columnName) {
@@ -126,7 +110,6 @@ class _AllenamentiState extends State<Allenamenti> {
                           ),
                         );
                       }).toList(),
-
                       rows: _data.map((row) {
                         return DataRow(
                             cells: row.values.map((cellValue) {
@@ -152,10 +135,8 @@ class _AllenamentiState extends State<Allenamenti> {
                           ),
                           textAlign: TextAlign.center,
                         )
-
                     ),
                   ],
-
                 ],
               ),
             ),
