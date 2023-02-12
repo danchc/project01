@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
+
 
 class MySchedaAllenamento extends StatelessWidget {
 
@@ -27,7 +28,15 @@ class MySchedaAllenamento extends StatelessWidget {
           children: [
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0,vertical: 15),
+              padding: const EdgeInsets.only(left: 14.0),
+              child: Icon(
+                LineIcons.dumbbell,
+                size: 34,
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 13.0,vertical: 15),
               child: Text(
                 nomeScheda,
                 style: const TextStyle(
