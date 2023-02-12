@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "419908692100",
+    "project_id": "mc-project-8ce85",
+    "storage_bucket": "mc-project-8ce85.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419908692100:android:555fc5a2a1d118bbbbbad1",
+        "android_client_info": {
+          "package_name": "it.uniroma3.project01"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419908692100-66asdqvnf8g63gujhie1emrms6a36f6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYe0ZLzZyauwXAQZp8sfJS72mo7uSi2Uw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419908692100-66asdqvnf8g63gujhie1emrms6a36f6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

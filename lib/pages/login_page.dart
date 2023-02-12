@@ -18,6 +18,7 @@ class LoginPage extends StatelessWidget {
 
       //colore sfondo
       backgroundColor: Colors.grey[300],
+      resizeToAvoidBottomInset: false,
 
       //corpo
       body: SafeArea(

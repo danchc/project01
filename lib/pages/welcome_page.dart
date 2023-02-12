@@ -20,7 +20,7 @@ class WelcomePage extends StatelessWidget {
     return Scaffold(
       //colore background
       backgroundColor: color,
-
+      resizeToAvoidBottomInset: false,
       //corpo principale organizzato a colonna
       body: SafeArea(
         child: Center(

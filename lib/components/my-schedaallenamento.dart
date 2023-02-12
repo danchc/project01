@@ -7,11 +7,13 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class MySchedaAllenamento extends StatelessWidget {
 
   final String nomeScheda;
+  final IconData? icona;
   Function(BuildContext)? deleteFunction;
 
   MySchedaAllenamento({
     Key? key,
     required this.nomeScheda,
+    required this.icona,
     required this.deleteFunction,
   }) : super(key: key);
 
@@ -42,12 +44,13 @@ class MySchedaAllenamento extends StatelessWidget {
               width: 500,
               child: Row(
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 14.0),
-                    child: Icon(
-                      LineIcons.dumbbell,
-                      size: 34,
-                    ),
+                    child:
+                      Icon(
+                        icona,
+                        size: 34,
+                      ),
                   ),
 
                   Padding(

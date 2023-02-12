@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mcproject/pages/logged/home.dart';
 import 'pages/welcome_page.dart';
 import 'pages/logged/home_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+
+void main() async{
+
+  //inizializzazione hive (local storage)
+  await Hive.initFlutter();
+
+  //apriamo spazio per salvataggio dati
+  var box = await Hive.openBox('project_box');
+
   runApp(const MyApp());
 }
 

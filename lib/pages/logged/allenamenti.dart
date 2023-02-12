@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:mcproject/components/my-schedaallenamento.dart';
 import 'package:mcproject/constants/constants.dart';
+import 'package:mcproject/data/database.dart';
 import 'package:mcproject/pages/logged/add_allenamento.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 
 class Allenamenti extends StatefulWidget {
@@ -18,29 +21,38 @@ class Allenamenti extends StatefulWidget {
 
 class _AllenamentiState extends State<Allenamenti> {
 
-  late List<String> _columnNames;
-  final List<Map<String, String>> _data = [];
-  List schedeAllenamento = [];
+  //hive
+  final _projectBox = Hive.box('project_box');
+  BoxDatabase database = BoxDatabase();
+
+
+  //controller
+  final  _controller = TextEditingController();
+
 
 
   @override
   void initState() {
-    if(_data.isNotEmpty) {
-      _columnNames = _data[0].keys.toList();
+
+    //se è la prima volta allora crea i dati iniziali, sennò carica i dati
+    if(_projectBox.get("ALLENAMENTI") == null) {
+      database.createInitialData();
     } else {
-      _columnNames = [];
+      database.loadData();
     }
+
     super.initState();
   }
 
-  final  _controller = TextEditingController();
+
 
   //salva nuova scheda
   void saveNuovaScheda() {
     setState(() {
-      schedeAllenamento.add(_controller.text);
+      database.schedeAllenamento.add(_controller.text);
     });
     Navigator.of(context).pop();
+    database.updateDatabase();
   }
 
   //funzione che riporta alla scheda per aggiungere scheda
@@ -52,8 +64,9 @@ class _AllenamentiState extends State<Allenamenti> {
   //funzione per eliminare scheda
   void deleteScheda(int index) {
     setState(() {
-      schedeAllenamento.removeAt(index);
+      database.schedeAllenamento.removeAt(index);
     });
+    database.updateDatabase();
   }
 
 
@@ -72,11 +85,12 @@ class _AllenamentiState extends State<Allenamenti> {
 
 
       body: ListView.builder(
-          itemCount: schedeAllenamento.length,
+          itemCount: database.schedeAllenamento.length,
           itemBuilder: (context,index) {
             // singola scheda
             return MySchedaAllenamento(
-                nomeScheda: schedeAllenamento[index].toString(),
+                nomeScheda: database.schedeAllenamento[index].toString(),
+                icona: LineIcons.dumbbell,
                 deleteFunction: (context) => deleteScheda(index),
             );
           }
