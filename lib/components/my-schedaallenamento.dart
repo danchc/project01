@@ -31,14 +31,14 @@ class MySchedaAllenamento extends StatelessWidget {
                   onPressed: deleteFunction,
                   icon: Icons.delete_forever_rounded,
                   backgroundColor: Colors.redAccent,
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
                 ),
               ],
             ),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.horizontal(left: Radius.circular(15)),
               ),
               height: 80,
               width: 500,
@@ -47,23 +47,35 @@ class MySchedaAllenamento extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(left: 14.0),
                     child:
-                      Icon(
+
+                    //icona principale
+                    Icon(
                         icona,
                         size: 34,
                       ),
                   ),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 13.0,vertical: 15),
-                    child: Text(
-                      nomeScheda,
-                      style: const TextStyle(
-                      fontFamily: 'Barlow',
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold
+                    //testo principale
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 13.0,vertical: 15),
+                      child: Text(
+                        nomeScheda,
+                        style: const TextStyle(
+                        fontFamily: 'Barlow',
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold
+                        ),
                       ),
                     ),
-                  ),
+
+                    //freccia finale
+                    const Padding(
+                      padding: EdgeInsets.only(left: 250.0),
+                      child: Icon(
+                        Icons.chevron_left,
+                        size: 22,
+                      ),
+                    )
                 ],
               ),
             ),

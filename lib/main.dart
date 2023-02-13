@@ -3,10 +3,15 @@ import 'package:mcproject/pages/logged/home.dart';
 import 'pages/welcome_page.dart';
 import 'pages/logged/home_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async{
-
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
   //inizializzazione hive (local storage)
   await Hive.initFlutter();
 
