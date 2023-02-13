@@ -10,6 +10,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/components/my-card.dart';
 import '/pages/login_page.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class Principale extends StatefulWidget {
   const Principale({Key? key}) : super(key: key);
@@ -161,7 +162,7 @@ class _PrincipaleState extends State<Principale> {
               const SizedBox(height: 15,),
 
 
-              /* body */
+              /* body
               Column(
                 children: [
                   Center(
@@ -180,8 +181,22 @@ class _PrincipaleState extends State<Principale> {
                     ),
                   )
                 ],
-              ),
+              ),*/
 
+              Center(
+                child: AspectRatio(
+                  aspectRatio: 2,
+                  child: BarChart(
+                    BarChartData(
+                      borderData: FlBorderData(
+                        border: const Border(bottom: BorderSide(), left: BorderSide()),
+                      ),
+                      gridData: FlGridData(show: false),
+
+                    )
+                  ),
+                )
+              )
             ],
           ),
         ),
@@ -190,3 +205,5 @@ class _PrincipaleState extends State<Principale> {
     );
   }
 }
+
+
