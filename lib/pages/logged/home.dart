@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/components/my-card.dart';
 import '/pages/login_page.dart';
-import 'package:mcproject/pages/logged/home_page.dart';
-import 'package:mcproject/components/my-navbar.dart';
 
 class Principale extends StatefulWidget {
   const Principale({Key? key}) : super(key: key);
@@ -24,6 +23,9 @@ class _PrincipaleState extends State<Principale> {
   /* orario / data */
   String formattedTime = DateFormat.yMMMEd().format(DateTime.now());
   var ora = int.parse(DateFormat.H().format(DateTime.now()));
+
+  /* informazioni utente */
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {

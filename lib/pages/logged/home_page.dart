@@ -24,10 +24,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  /* orario / data */
-  String formattedTime = DateFormat.yMMMEd().format(DateTime.now());
-  var ora = int.parse(DateFormat.H().format(DateTime.now()));
-
   /* impostata sulla homepage */
   int currentIndex = 0;
 

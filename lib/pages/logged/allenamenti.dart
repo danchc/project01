@@ -21,25 +21,15 @@ class Allenamenti extends StatefulWidget {
 
 class _AllenamentiState extends State<Allenamenti> {
 
-  //hive
-  final _projectBox = Hive.box('project_box');
-  BoxDatabase database = BoxDatabase();
-
 
   //controller
   final  _controller = TextEditingController();
 
-
+  //lista
+  List schedeAllenamento = [];
 
   @override
   void initState() {
-
-    //se è la prima volta allora crea i dati iniziali, sennò carica i dati
-    if(_projectBox.get("ALLENAMENTI") == null) {
-      database.createInitialData();
-    } else {
-      database.loadData();
-    }
 
     super.initState();
   }
@@ -49,10 +39,9 @@ class _AllenamentiState extends State<Allenamenti> {
   //salva nuova scheda
   void saveNuovaScheda() {
     setState(() {
-      database.schedeAllenamento.add(_controller.text);
+      schedeAllenamento.add(_controller.text);
     });
     Navigator.of(context).pop();
-    database.updateDatabase();
   }
 
   //funzione che riporta alla scheda per aggiungere scheda
@@ -64,9 +53,8 @@ class _AllenamentiState extends State<Allenamenti> {
   //funzione per eliminare scheda
   void deleteScheda(int index) {
     setState(() {
-      database.schedeAllenamento.removeAt(index);
+      schedeAllenamento.removeAt(index);
     });
-    database.updateDatabase();
   }
 
 
@@ -85,11 +73,11 @@ class _AllenamentiState extends State<Allenamenti> {
 
 
       body: ListView.builder(
-          itemCount: database.schedeAllenamento.length,
+          itemCount: schedeAllenamento.length,
           itemBuilder: (context,index) {
             // singola scheda
             return MySchedaAllenamento(
-                nomeScheda: database.schedeAllenamento[index].toString(),
+                nomeScheda: schedeAllenamento[index].toString(),
                 icona: LineIcons.dumbbell,
                 deleteFunction: (context) => deleteScheda(index),
             );

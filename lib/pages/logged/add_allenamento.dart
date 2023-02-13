@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:ffi';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mcproject/components/my-button.dart';
 import 'package:mcproject/components/my-textfield.dart';
@@ -8,6 +9,8 @@ import 'package:mcproject/pages/logged/allenamenti.dart';
 
 
 class AddAllenamento extends StatelessWidget {
+
+
 
   final controller;
   VoidCallback onSave;
@@ -20,7 +23,6 @@ class AddAllenamento extends StatelessWidget {
 
   //colore principale
   static const _textColor = Color.fromARGB(255, 11, 49, 93);
-
 
   @override
   Widget build(BuildContext context) {

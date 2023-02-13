@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mcproject/components/my-option-card.dart';
@@ -10,8 +11,17 @@ class Profilo extends StatefulWidget {
 }
 
 class _ProfiloState extends State<Profilo> {
+
+  void signOut() {
+    FirebaseAuth.instance.signOut();
+  }
+
+  /* informazioni utente */
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
 
@@ -65,8 +75,8 @@ class _ProfiloState extends State<Profilo> {
                   Padding(
                     padding: const EdgeInsets.only(right: 100.0),
                     child: Container(
-                      child: const Text(
-                        '_nomeutente',
+                      child: Text(
+                        user.email!,
                         style: TextStyle(
                           fontFamily: 'Barlow',
                           fontSize: 20,
@@ -77,10 +87,13 @@ class _ProfiloState extends State<Profilo> {
                   ),
 
                   /* exit button */
-                  Container(
-                    child: const Icon(
-                      Icons.exit_to_app,
-                      size: 30,
+                  GestureDetector(
+                    onTap: signOut,
+                    child: Container(
+                      child: const Icon(
+                        Icons.exit_to_app,
+                        size: 30,
+                      ),
                     ),
                   ),
 

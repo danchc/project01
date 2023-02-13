@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mcproject/pages/logged/home.dart';
 import 'package:mcproject/pages/logged/home_page.dart';
@@ -5,12 +8,43 @@ import '/components/my-textfield.dart';
 import '/components/my-button.dart';
 import '/components/my-square-image.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
-  void signIn() {}
+
+  void signIn() async {
+    //loading
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+    );
+
+    log(emailController.text);
+    log(passwordController.text);
+
+    await FirebaseAuth
+        .instance
+        .signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+    log('postauth');
+
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,10 +117,8 @@ class LoginPage extends StatelessWidget {
                     //bottone invio
                     MyButton(
                         name: 'Invio',
-                        onTap: () => {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => const HomePage()))
-                        }),
+                        onTap: signIn
+                    ),
 
                     const SizedBox(height: 50,),
 

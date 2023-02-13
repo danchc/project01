@@ -29,6 +29,13 @@
             {
               "client_id": "419908692100-66asdqvnf8g63gujhie1emrms6a36f6r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "419908692100-fk9lj4igk2tammf559p15e9ab89gcog8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "it.uniroma3.project01"
+              }
             }
           ]
         }
