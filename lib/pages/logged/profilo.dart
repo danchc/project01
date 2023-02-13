@@ -79,7 +79,7 @@ class _ProfiloState extends State<Profilo> {
                         user.email!,
                         style: TextStyle(
                           fontFamily: 'Barlow',
-                          fontSize: 20,
+                          fontSize: 17,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

@@ -10,8 +10,6 @@ import 'package:mcproject/pages/logged/allenamenti.dart';
 
 class AddAllenamento extends StatelessWidget {
 
-
-
   final controller;
   VoidCallback onSave;
 
@@ -82,7 +80,12 @@ class AddAllenamento extends StatelessWidget {
 
               /* start zona input */
               const SizedBox(height: 25,),
-              MyTextField(nome: 'Nome scheda', hide: false, controller: controller),
+              MyTextField(
+                nome: 'Nome scheda',
+                hide: false,
+                controller: controller,
+                error: 'Nome non valido',
+              ),
 
               /* fine zona input */
               const SizedBox(height: 25,),

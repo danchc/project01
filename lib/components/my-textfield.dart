@@ -5,15 +5,27 @@ class MyTextField extends StatelessWidget {
   final controller;
   final String nome;
   final bool hide;
+  final String error;
 
-  const MyTextField({Key? key, required this.nome, required this.hide, required this.controller}) : super(key: key);
+  const MyTextField({
+    Key? key,
+    required this.nome,
+    required this.hide,
+    required this.error,
+    required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: TextField(
+        child: TextFormField(
+          validator: (value) {
+            if(value == null || value.isEmpty) {
+              return error;
+            }
+            return null;
+          },
           controller: controller,
           obscureText: hide,
           decoration: InputDecoration(

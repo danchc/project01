@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mcproject/services/auth_service.dart';
 import '/components/my-textfield.dart';
 import '/components/my-button.dart';
 import '/components/my-square-image.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({Key? key}) : super(key: key);
@@ -62,11 +65,26 @@ class RegisterPage extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 20,),
-                        MyTextField(nome: 'Inserisci il tuo username', hide: false, controller: usernameController),
+                        MyTextField(
+                            nome: 'Inserisci il tuo username',
+                            hide: false,
+                            controller: usernameController,
+                          error: 'Username non valido',
+                        ),
                         const SizedBox(height: 20,),
-                        MyTextField(nome: 'Inserisci la tua e-mail', hide: false, controller: emailController),
+                        MyTextField(
+                            nome: 'Inserisci la tua e-mail',
+                            hide: false,
+                            controller: emailController,
+                            error: 'E-mail non valida'
+                        ),
                         const SizedBox(height: 20,),
-                        MyTextField(nome: 'Inserisci la tua password', hide: true, controller: passwordController),
+                        MyTextField(
+                            nome: 'Inserisci la tua password',
+                            hide: true,
+                            controller: passwordController,
+                            error: 'Password non valida'
+                        ),
                         const SizedBox(height: 20,),
 
                         //bottoni
@@ -76,15 +94,21 @@ class RegisterPage extends StatelessWidget {
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
 
                             //google
-                            SquareImage(image: 'assets/images/google.png'),
+                            SquareImage(
+                                image: 'assets/images/google.png',
+                                onTap: () => AuthService().googleSignIn(),
+                            ),
 
-                            SizedBox(width:30),
+                            const SizedBox(width:30),
 
                             //apple
-                            SquareImage(image: 'assets/images/apple.png'),
+                            SquareImage(
+                              image: 'assets/images/apple.png',
+                              onTap: () => {},
+                            ),
 
                           ],
                         ),
