@@ -71,10 +71,9 @@ class WelcomePage extends StatelessWidget {
               //bottoni
               MyButton(name: 'Login',
                 onTap: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginPage())),
-                //print("Card tapped.")
-              }),
+                  Navigator.pushNamed(context, '/login')
+                }
+              ),
 
               //divisore
               Expanded(

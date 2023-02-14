@@ -20,6 +20,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  static String id = "sign_in";
+
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
@@ -50,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
           email: emailController.text,
           password: passwordController.text,
         );
-        Navigator.pop(context);
+        Navigator.of(context).pop();
       } on FirebaseAuthException catch (e) {
         Navigator.pop(context);
         if(e.code == 'user-not-found') {
@@ -98,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void googleSignIn() async {
     AuthService().googleSignIn();
-    Navigator.pop(context);
+    Navigator.of(context).pop(id);
   }
 
   @override

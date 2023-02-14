@@ -7,6 +7,7 @@ import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/data/database.dart';
 import 'package:mcproject/pages/logged/add_allenamento.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mcproject/pages/logged/scheda_allenamento.dart';
 
 
 class Allenamenti extends StatefulWidget {
@@ -51,7 +52,7 @@ class _AllenamentiState extends State<Allenamenti> {
     showDialog(context: context, builder: (context) {
       return AddAllenamento(
           controller: _controller,
-        numContr: _numController,
+          numContr: _numController,
           onSave: saveNuovaScheda,
       );});
 
@@ -83,10 +84,18 @@ class _AllenamentiState extends State<Allenamenti> {
           itemCount: schedeAllenamento.length,
           itemBuilder: (context,index) {
             // singola scheda
-            return MySchedaAllenamento(
-                nomeScheda: schedeAllenamento[index].toString(),
-                icona: LineIcons.dumbbell,
-                deleteFunction: (context) => deleteScheda(index),
+            return GestureDetector(
+              onTap: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(
+                        builder: (context) => SchedaAllenamento(nomeScheda: schedeAllenamento[index].toString())
+                    ))
+              },
+              child: MySchedaAllenamento(
+                  nomeScheda: schedeAllenamento[index].toString(),
+                  icona: LineIcons.dumbbell,
+                  deleteFunction: (context) => deleteScheda(index),
+              ),
             );
           }
       ),
@@ -146,6 +155,7 @@ class _AllenamentiState extends State<Allenamenti> {
         ),
       ),*/
       floatingActionButton: FloatingActionButton(
+        backgroundColor: textColor,
         onPressed: createNuovaScheda,
         child: Icon(Icons.add),
       ),

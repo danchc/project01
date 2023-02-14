@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mcproject/pages/auth_page.dart';
 import 'package:mcproject/pages/logged/home.dart';
+import 'package:mcproject/pages/login_page.dart';
+import 'package:mcproject/pages/register_page.dart';
+import 'package:provider/provider.dart';
+import 'data/workout_data.dart';
 import 'pages/welcome_page.dart';
 import 'pages/logged/home_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -15,7 +19,7 @@ void main() async{
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -24,9 +28,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: AuthPage(),
+    return ChangeNotifierProvider(
+      create: (context) => WorkoutData(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: AuthPage(),
+        routes: {
+          '/login' : (context) =>  LoginPage(),
+          '/register' : (context) =>  RegisterPage(),
+        },
+      ),
     );
   }
 }
