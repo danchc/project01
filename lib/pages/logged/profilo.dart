@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,34 +54,18 @@ class _ProfiloState extends State<Profilo> {
             Container(
               height: 80,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
 
-                  /* foto profilo */
-                  Container(
-                    width: 60,
-                    alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: const Text(
-                      'U',
-                      style: TextStyle(
-                        fontSize: 30,
-                      ),
-                    ),
-                  ),
-
                   /* nome utente */
-                  Padding(
-                    padding: const EdgeInsets.only(right: 100.0),
+                  Expanded(
                     child: Container(
+                      alignment: Alignment.center,
                       child: Text(
                         user.email!,
                         style: TextStyle(
                           fontFamily: 'Barlow',
-                          fontSize: 17,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -87,12 +73,17 @@ class _ProfiloState extends State<Profilo> {
                   ),
 
                   /* exit button */
-                  GestureDetector(
-                    onTap: signOut,
-                    child: Container(
-                      child: const Icon(
-                        Icons.exit_to_app,
-                        size: 30,
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: GestureDetector(
+                      onTap: signOut,
+                      child: Container(
+                        width: 40,
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.exit_to_app,
+                          size: 30,
+                        ),
                       ),
                     ),
                   ),

@@ -26,95 +26,114 @@ class WelcomePage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 80),
+
+              const SizedBox(height: 60,),
 
               //logo
-              Image.asset(
-                'assets/images/mainicon.png',
-                height: 200,
+              Container(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  'assets/images/mainicon.png',
+                  height: 180,
+                ),
               ),
 
-              const SizedBox(height: 50),
 
               //testo
-              const Text(
-                'Benvenuto!',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Barlow'),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Benvenuto!',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Barlow'),
+                  ),
+                ),
               ),
-
-              const SizedBox(height: 17),
 
               //sottotitolo
-              const Text(
-                'Sei pronto ad accettare la sfida?',
-                style: TextStyle(
-                    color: Colors.white, fontSize: 20, fontFamily: 'Barlow'),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Sei pronto ad accettare la sfida?',
+                    style: TextStyle(
+                        color: Colors.white, fontSize: 20, fontFamily: 'Barlow'),
+                  ),
+                ),
               ),
 
-              const SizedBox(height: 25),
+              const SizedBox(height: 15),
 
               //bottoni
               MyButton(name: 'Login',
-                  onTap: () => {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginPage())),
-                  //print("Card tapped.")
+                onTap: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage())),
+                //print("Card tapped.")
               }),
 
-              const SizedBox(height: 50),
-
               //divisore
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(children: [
-                  Expanded(
-                    child: Divider(
-                      thickness: 0.5,
-                      color: Colors.grey[400],
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(children: [
+                    Expanded(
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Colors.grey[400],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Text(
-                      'Oppure',
-                      style: TextStyle(color: Colors.white),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(
+                        'Oppure',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      thickness: 0.5,
-                      color: Colors.grey[400],
+                    Expanded(
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Colors.grey[400],
+                      ),
                     ),
-                  ),
-                ]),
+                  ]),
+                ),
               ),
 
-              const SizedBox(height: 50),
 
               //bottone registrazione
               MyButton(name: 'Sign Up',
-                  onTap: () =>
-                  {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => RegisterPage())
-                    ),
-                  }
+                onTap: () =>
+                {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RegisterPage())
+                  ),
+                }
               ),
+
 
               const SizedBox(height: 50),
 
               //copyright
-              Center(
-                child: Text(
-                  '© Daniel Checchia',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Barlow',
-                    fontSize: 15,
+              Expanded(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '© Daniel Checchia',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Barlow',
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               )

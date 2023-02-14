@@ -24,6 +24,7 @@ class _AllenamentiState extends State<Allenamenti> {
 
   //controller
   final  _controller = TextEditingController();
+  final _numController = TextEditingController();
 
   //lista
   List schedeAllenamento = [];
@@ -42,11 +43,17 @@ class _AllenamentiState extends State<Allenamenti> {
       schedeAllenamento.add(_controller.text);
     });
     Navigator.of(context).pop();
+    log('Numero: ${_numController.text}');
   }
 
   //funzione che riporta alla scheda per aggiungere scheda
   void createNuovaScheda() {
-    showDialog(context: context, builder: (context) {return AddAllenamento(controller: _controller, onSave: saveNuovaScheda);});
+    showDialog(context: context, builder: (context) {
+      return AddAllenamento(
+          controller: _controller,
+        numContr: _numController,
+          onSave: saveNuovaScheda,
+      );});
 
   }
 

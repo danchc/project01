@@ -44,38 +44,41 @@ class MySchedaAllenamento extends StatelessWidget {
               width: 500,
               child: Row(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 14.0),
-                    child:
-
-                    //icona principale
-                    Icon(
-                        icona,
-                        size: 34,
+                  Expanded(
+                    child: Container(
+                      alignment: AlignmentDirectional.center,
+                      child: Icon(
+                          icona,
+                          size: 34,
+                        ),
                       ),
                   ),
 
                     //testo principale
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 13.0,vertical: 15),
-                      child: Text(
-                        nomeScheda,
-                        style: const TextStyle(
-                        fontFamily: 'Barlow',
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold
+                    Expanded(
+                      child: Container(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Text(
+                          nomeScheda,
+                          style: const TextStyle(
+                          fontFamily: 'Barlow',
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold
+                          ),
                         ),
                       ),
                     ),
 
                     //freccia finale
-                    const Padding(
-                      padding: EdgeInsets.only(left: 250.0),
-                      child: Icon(
-                        Icons.chevron_left,
-                        size: 22,
-                      ),
-                    )
+                     Expanded(
+                       child: Container(
+                         alignment: Alignment.center,
+                         child: Icon(
+                           Icons.chevron_left,
+                           size: 22,
+                         ),
+                       ),
+                     )
                 ],
               ),
             ),
