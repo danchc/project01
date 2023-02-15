@@ -44,6 +44,7 @@ class _AllenamentiState extends State<Allenamenti> {
       schedeAllenamento.add(_controller.text);
     });
     Navigator.of(context).pop();
+    _numController.clear();
     log('Numero: ${_numController.text}');
   }
 
@@ -100,60 +101,6 @@ class _AllenamentiState extends State<Allenamenti> {
           }
       ),
 
-
-
-      /*Center(
-        child: SingleChildScrollView(
-          child: SafeArea(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if(_data.isNotEmpty) ...[
-                    DataTable(
-                      columns: _columnNames.map((columnName) {
-                        return DataColumn(
-                          label: Text(
-                            columnName,
-                            style: TextStyle(
-                                fontSize: 18
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                      rows: _data.map((row) {
-                        return DataRow(
-                            cells: row.values.map((cellValue) {
-                              return DataCell(
-                                Text(
-                                  cellValue,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              );
-                            }).toList());
-                      }).toList(),
-                    )
-                  ] else ... [
-                    Container(
-                      alignment: AlignmentDirectional.center,
-                      child:
-                        const Text(
-                          'Non ci sono ancora allenamenti',
-                          style: TextStyle(
-                            fontSize: 15,
-                          ),
-                          textAlign: TextAlign.center,
-                        )
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),*/
       floatingActionButton: FloatingActionButton(
         backgroundColor: textColor,
         onPressed: createNuovaScheda,

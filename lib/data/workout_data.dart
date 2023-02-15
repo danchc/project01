@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mcproject/model/esercizio.dart';
 
-import '../model/workout.dart';
+import '../model/sessione.dart';
 
 /**
  * Struttura base del workout.
@@ -10,8 +10,8 @@ import '../model/workout.dart';
 class WorkoutData extends ChangeNotifier{
 
   /* default */
-  List<Workout> listaWorkout = [
-    Workout(
+  List<Sessione> listaWorkout = [
+    Sessione(
         nome: 'Workout',
         esercizi: [
           Esercizio(
@@ -24,13 +24,13 @@ class WorkoutData extends ChangeNotifier{
   ];
 
   /* get lista workout */
-  List<Workout> getListWorkout() {
+  List<Sessione> getListWorkout() {
     return listaWorkout;
   }
 
   /* aggiungi workout */
   void addWorkout(String nome) {
-    listaWorkout.add(Workout(nome: nome, esercizi: []));
+    listaWorkout.add(Sessione(nome: nome, esercizi: []));
     notifyListeners();
   }
 
@@ -38,8 +38,8 @@ class WorkoutData extends ChangeNotifier{
   void addEsercizio(String nomeWorkout, String nome, String reps, String sets, String peso) {
 
     /* cerca il workout corrente */
-    Workout corrente =
-        listaWorkout.firstWhere((workout) => workout.nome == nomeWorkout);
+    Sessione corrente =
+        getWorkoutCorrente(nomeWorkout);
 
     /* aggiungi esercizio al workout corrente */
     corrente.esercizi.add(
@@ -49,4 +49,17 @@ class WorkoutData extends ChangeNotifier{
     notifyListeners();
   }
 
+  //cerca il workout corrente
+  Sessione getWorkoutCorrente(String nomeWorkout) {
+    return listaWorkout.firstWhere((workout) => workout.nome == nomeWorkout);
+  }
+
+  //metodo per restituire il numero di esercizi del workout corrente
+  int numeroEserciziWorkoutCorrente(String nomeWorkout) {
+    Sessione corrente = getWorkoutCorrente(nomeWorkout);
+
+    return corrente.esercizi.length;
+  }
+
+  //metodo per cercare l'esercizio corrente
 }

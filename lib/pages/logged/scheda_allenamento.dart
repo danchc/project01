@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mcproject/constants/constants.dart';
+import 'package:mcproject/pages/logged/scheda_esercizi.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/workout_data.dart';
@@ -28,6 +29,7 @@ class _SchedaAllenamentoState extends State<SchedaAllenamento> {
   void salvaSessione() {
     Provider.of<WorkoutData>(context, listen:false).addWorkout(sessioneController.text);
     Navigator.pop(context);
+    clear();
   }
 
   //crea sessione
@@ -48,6 +50,17 @@ class _SchedaAllenamentoState extends State<SchedaAllenamento> {
         ));
   }
 
+  //metodo per entrare nei dettagli della scheda selezionata
+  void goInSchedaSessione(String nomeSessione) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => SchedaEsercizi(nomeSessione: nomeSessione)));
+  }
+
+  //metodo per fare un clear dei controller
+  void clear() {
+    sessioneController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
    return Consumer<WorkoutData>(
@@ -55,6 +68,7 @@ class _SchedaAllenamentoState extends State<SchedaAllenamento> {
      Scaffold(
        backgroundColor: Colors.grey[300],
         appBar: AppBar(
+          centerTitle: true,
           title: Text(widget.nomeScheda),
           leading: const BackButton(
             color: Colors.black,
@@ -62,6 +76,7 @@ class _SchedaAllenamentoState extends State<SchedaAllenamento> {
           backgroundColor: Colors.grey[300],
           elevation: 0,
         ),
+
        body: ListView.builder(
          itemCount: value.getListWorkout().length,
          itemBuilder: (context,index) =>
@@ -75,7 +90,9 @@ class _SchedaAllenamentoState extends State<SchedaAllenamento> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               trailing: IconButton(
                 icon: Icon(Icons.arrow_forward_ios),
-                onPressed: () => {},
+                onPressed: () => {
+                  goInSchedaSessione(value.getListWorkout()[index].nome)
+                },
               ),
             ),
           ),
