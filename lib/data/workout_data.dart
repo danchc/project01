@@ -10,18 +10,7 @@ import '../model/sessione.dart';
 class WorkoutData extends ChangeNotifier{
 
   /* default */
-  List<Sessione> listaWorkout = [
-    Sessione(
-        nome: 'Workout',
-        esercizi: [
-          Esercizio(
-            nome: 'Esercizio',
-            reps: '10',
-            sets: '3',
-            peso: '20'
-          )
-        ])
-  ];
+  List<Sessione> listaWorkout = [];
 
   /* get lista workout */
   List<Sessione> getListWorkout() {

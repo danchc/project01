@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mcproject/components/my-session.dart';
 import 'package:mcproject/constants/constants.dart';
+import 'package:mcproject/data/allenamenti_data.dart';
+import 'package:mcproject/model/esercizio.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/workout_data.dart';
@@ -9,10 +11,12 @@ import '../../data/workout_data.dart';
 class SchedaEsercizi extends StatefulWidget {
 
   final String nomeSessione;
+  final String nomeScheda;
 
   const SchedaEsercizi({
     Key? key,
     required this.nomeSessione,
+    required this.nomeScheda,
   }) : super(key: key);
 
   @override
@@ -103,6 +107,7 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
             ),
           ],
         ));
+
   }
 
   void salvaEsercizio() {
@@ -111,19 +116,22 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
     String numeroReps = numeroRepsController.text;
     String peso = pesoController.text;
 
-    Provider.
-      of<WorkoutData>(context, listen:false).
-      addEsercizio(
-        widget.nomeSessione,
-        nomeEsercizio,
-        numeroReps,
-        numeroSets,
-        peso);
+    Provider.of
+      <AllenamentiData>(context, listen:false)
+    .getSessioneCorrente(widget.nomeScheda, widget.nomeSessione)
+    .esercizi
+    .add(
+        Esercizio(
+            nome: nomeEsercizio,
+            reps: numeroReps,
+            sets: numeroSets,
+            peso: peso)
+    );
 
     Navigator.pop(context);
     clear();
-  }
 
+  }
 
   //elimina esercizio
   void deleteEsercizio(int index) {
@@ -140,7 +148,7 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<WorkoutData>(
+    return Consumer<AllenamentiData>(
       builder: (context, value, child) =>
       Scaffold(
         backgroundColor: Colors.grey[300],
@@ -161,17 +169,17 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
 
         body:
           ListView.builder(
-            itemCount: value.numeroEserciziWorkoutCorrente(widget.nomeSessione),
+            itemCount: value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi.length,
             itemBuilder: (context, index) {
               return MySessione(
                 nomeEsercizio:
-                  value.getWorkoutCorrente(widget.nomeSessione).esercizi[index].nome,
+                  value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].nome,
                 sets:
-                  value.getWorkoutCorrente(widget.nomeSessione).esercizi[index].sets,
+                  value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].sets,
                 reps:
-                  value.getWorkoutCorrente(widget.nomeSessione).esercizi[index].reps,
+                  value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].reps,
                 peso:
-                  value.getWorkoutCorrente(widget.nomeSessione).esercizi[index].peso,
+                  value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].peso,
                 deleteFunction: (context) => deleteEsercizio,
               );
             },

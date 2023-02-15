@@ -31,7 +31,7 @@ class MySessione extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       child: Slidable(
         endActionPane: ActionPane(
-          motion: StretchMotion(),
+          motion: const StretchMotion(),
           children: [
             SlidableAction(
               onPressed: deleteFunction,

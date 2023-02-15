@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mcproject/data/allenamenti_data.dart';
 import 'package:mcproject/pages/auth_page.dart';
 import 'package:mcproject/pages/logged/home.dart';
 import 'package:mcproject/pages/login_page.dart';
@@ -28,8 +29,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => WorkoutData(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<WorkoutData>(
+          create: (_) => WorkoutData(),
+        ),
+        ChangeNotifierProvider<AllenamentiData>(
+          create: (_) => AllenamentiData() ,
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: AuthPage(),
