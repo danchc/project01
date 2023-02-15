@@ -9,6 +9,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/components/my-card.dart';
+import 'package:mcproject/pages/logged/nutrizione/nutrizione.dart';
+import 'package:mcproject/pages/logged/scheda_allenamenti.dart';
 import '/pages/login_page.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -99,8 +101,8 @@ class _PrincipaleState extends State<Principale> {
                             shape: BoxShape.circle,
                             color: Colors.white,
                           ),
-                          child: const Text(
-                            'U',
+                          child: Text(
+                            user.email![0].toUpperCase(),
                             style: TextStyle(
                               fontSize: 40,
                             ),
@@ -137,11 +139,11 @@ class _PrincipaleState extends State<Principale> {
 
                   MyCard(
                     descrizione: 'I tuoi allenamenti',
-                    colore: Colors.blueAccent,
+                    colore: Colors.white,
                     icona: Icons.sports_gymnastics,
                     onTap: () => {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => LoginPage())),
+                          MaterialPageRoute(builder: (context) => Allenamenti())),
                     },
                   ),
 
@@ -151,7 +153,7 @@ class _PrincipaleState extends State<Principale> {
                       icona: Icons.emoji_food_beverage,
                       onTap: () => {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => LoginPage())),
+                            MaterialPageRoute(builder: (context) => Nutrizione())),
                       }
                   ),
 
@@ -183,20 +185,7 @@ class _PrincipaleState extends State<Principale> {
                 ],
               ),*/
 
-              Center(
-                child: AspectRatio(
-                  aspectRatio: 2,
-                  child: BarChart(
-                    BarChartData(
-                      borderData: FlBorderData(
-                        border: const Border(bottom: BorderSide(), left: BorderSide()),
-                      ),
-                      gridData: FlGridData(show: false),
 
-                    )
-                  ),
-                )
-              )
             ],
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mcproject/components/my-option-card.dart';
+import 'package:mcproject/pages/logged/options/profilo_page.dart';
 
 class Profilo extends StatefulWidget {
   const Profilo({Key? key}) : super(key: key);
@@ -63,7 +64,7 @@ class _ProfiloState extends State<Profilo> {
                       alignment: Alignment.center,
                       child: Text(
                         user.email!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Barlow',
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -101,9 +102,32 @@ class _ProfiloState extends State<Profilo> {
 
             /* opzioni */
 
-            MyOptionCard(descrizione: 'Profilo', icona: Icons.person),
-            MyOptionCard(descrizione: 'Impostazioni', icona: CupertinoIcons.gear_solid),
-            MyOptionCard(descrizione: 'Crediti', icona: CupertinoIcons.info_circle_fill),
+            MyOptionCard(
+                descrizione: 'Profilo',
+                icona: Icons.person,
+                onTap: () => {
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AccountDetails()))
+                },
+            ),
+
+            MyOptionCard(
+                descrizione: 'Impostazioni',
+                icona: CupertinoIcons.gear_solid,
+                onTap: () => {
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AccountDetails()))
+                },
+            ),
+
+            MyOptionCard(
+                descrizione: 'Crediti',
+                icona: CupertinoIcons.info_circle_fill,
+                onTap: () => {
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AccountDetails()))
+              },
+            ),
 
 
           ],

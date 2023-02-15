@@ -11,7 +11,7 @@ import 'package:mcproject/components/my-card.dart';
 import 'package:mcproject/pages/logged/scheda_allenamenti.dart';
 import 'package:mcproject/pages/logged/home.dart';
 import 'package:mcproject/pages/logged/nutrizione/nutrizione.dart';
-import 'package:mcproject/pages/logged/profilo.dart';
+import 'package:mcproject/pages/logged/options/profilo.dart';
 import '/pages/login_page.dart';
 import 'package:mcproject/components/my-navbar.dart';
 

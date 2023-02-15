@@ -5,8 +5,14 @@ class MyOptionCard extends StatelessWidget {
   /* parametri */
   final String descrizione;
   final IconData? icona;
+  final Function()? onTap;
 
-  const MyOptionCard({Key? key, required this.descrizione, required this.icona}) : super(key: key);
+  const MyOptionCard({
+    Key? key,
+    required this.descrizione,
+    required this.icona,
+    required this.onTap
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,7 @@ class MyOptionCard extends StatelessWidget {
       child: Container(
         height: 80,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
 
             Padding(
@@ -29,7 +35,6 @@ class MyOptionCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 88.0),
               child: Container(
-                width: 200,
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(
                   descrizione,
@@ -42,9 +47,14 @@ class MyOptionCard extends StatelessWidget {
               ),
             ),
 
-            Icon(
-                Icons.arrow_forward_ios,
-              size: 18,
+            Expanded(
+              child: Container(
+                alignment: AlignmentDirectional.centerEnd,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_forward_ios),
+                  onPressed: onTap,
+                ),
+              ),
             ),
 
           ],

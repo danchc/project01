@@ -62,7 +62,7 @@ class MySchedaAllenamento extends StatelessWidget {
                           nomeScheda,
                           style: const TextStyle(
                           fontFamily: 'Barlow',
-                          fontSize: 22,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold
                           ),
                         ),

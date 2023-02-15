@@ -55,7 +55,6 @@ class _AllenamentiState extends State<Allenamenti> {
   }
 
   //funzione che riporta alla scheda per aggiungere scheda
-  //crea sessione
   void createNuovaScheda() {
     showDialog(
         context: context,
@@ -96,7 +95,8 @@ class _AllenamentiState extends State<Allenamenti> {
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
           title: const Text(
-              'Allenamenti'
+              'Allenamenti',
+              style: TextStyle(fontFamily: 'Barlow', fontWeight: FontWeight.bold, fontSize: 24)
           ),
           automaticallyImplyLeading: false,
           centerTitle: true,
