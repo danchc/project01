@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mcproject/constants/constants.dart';
+import 'package:mcproject/data/nutrizione_data.dart';
+import 'package:mcproject/pages/logged/nutrizione/scheda_alimenti.dart';
+import 'package:provider/provider.dart';
 
 import '../../../components/my-schedaallenamento.dart';
 
@@ -42,44 +45,52 @@ class _NutrizioneState extends State<Nutrizione> {
   void deleteScheda(int index) {}
 
   /* save scheda */
-  void saveScheda() {}
+  void saveScheda() {
+    Provider.of<NutrizioneData>(context, listen:false).addSchedaNutrizione(schedaNutrizioneController.text);
+    Navigator.pop(context);
+    schedaNutrizioneController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
-       backgroundColor: Colors.grey[200],
-       appBar: AppBar(
-         title: const Text(
-             'Nutrizione',
-           style: TextStyle(fontFamily: 'Barlow', fontWeight: FontWeight.bold, fontSize: 24)
+     return Consumer<NutrizioneData>(
+       builder: (context,value,child) =>
+       Scaffold(
+         backgroundColor: Colors.grey[200],
+         appBar: AppBar(
+           title: const Text(
+               'Nutrizione',
+             style: TextStyle(fontFamily: 'Barlow', fontWeight: FontWeight.bold, fontSize: 24)
+           ),
+           automaticallyImplyLeading: false,
+           centerTitle: true,
+           backgroundColor: colore,
          ),
-         automaticallyImplyLeading: false,
-         centerTitle: true,
-         backgroundColor: colore,
-       ),
 
 
-       body: ListView.builder(
-           itemCount: 3,
-           itemBuilder: (context,index) {
-             // singola scheda
-             return GestureDetector(
-               onTap: () => {
+         body: ListView.builder(
+             itemCount: value.getSchedeNutrizioni().length,
+             itemBuilder: (context,index) {
+               // singola scheda
+               return GestureDetector(
+                 onTap: () => {
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SchedaAlimenti(nomeScheda: value.getSchedeNutrizioni()[index].nome,)))
+                 },
+                 child: MySchedaAllenamento(
+                   nomeScheda: value.getSchedeNutrizioni()[index].nome,
+                   icona: LineIcons.beer,
+                   deleteFunction: (context) => deleteScheda(index),
+                 ),
+               );
+             }
+         ),
 
-               },
-               child: MySchedaAllenamento(
-                 nomeScheda: 'bubu',
-                 icona: LineIcons.beer,
-                 deleteFunction: (context) => deleteScheda(index),
-               ),
-             );
-           }
-       ),
-
-       floatingActionButton: FloatingActionButton(
-         backgroundColor: textColor,
-         onPressed: createNuovaScheda,
-         child: Icon(Icons.add),
+         floatingActionButton: FloatingActionButton(
+           backgroundColor: textColor,
+           onPressed: createNuovaScheda,
+           child: Icon(Icons.add),
+         ),
        ),
      );
   }

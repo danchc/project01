@@ -9,8 +9,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/components/my-card.dart';
+import 'package:mcproject/data/allenamenti_data.dart';
+import 'package:mcproject/data/workout_data.dart';
 import 'package:mcproject/pages/logged/nutrizione/nutrizione.dart';
 import 'package:mcproject/pages/logged/scheda_allenamenti.dart';
+import 'package:provider/provider.dart';
+import '../../data/nutrizione_data.dart';
 import '/pages/login_page.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -141,20 +145,14 @@ class _PrincipaleState extends State<Principale> {
                     descrizione: 'I tuoi allenamenti',
                     colore: Colors.white,
                     icona: Icons.sports_gymnastics,
-                    onTap: () => {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Allenamenti())),
-                    },
+                    numero: Provider.of<AllenamentiData>(context, listen: false).getListaSchede().length,
                   ),
 
                   MyCard(
-                      descrizione: 'La tua dieta',
-                      colore: Colors.white,
-                      icona: Icons.emoji_food_beverage,
-                      onTap: () => {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Nutrizione())),
-                      }
+                    descrizione: 'La tua dieta',
+                    colore: Colors.white,
+                    icona: Icons.emoji_food_beverage,
+                    numero: Provider.of<NutrizioneData>(context, listen: false).getSchedeNutrizioni().length,
                   ),
 
                 ],

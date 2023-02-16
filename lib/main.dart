@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mcproject/data/allenamenti_data.dart';
+import 'package:mcproject/data/nutrizione_data.dart';
 import 'package:mcproject/pages/auth_page.dart';
 import 'package:mcproject/pages/logged/home.dart';
 import 'package:mcproject/pages/login_page.dart';
@@ -20,7 +21,7 @@ void main() async{
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AllenamentiData>(
           create: (_) => AllenamentiData() ,
+        ),
+        ChangeNotifierProvider<NutrizioneData>(
+          create: (_) => NutrizioneData() ,
         ),
       ],
       child: MaterialApp(
