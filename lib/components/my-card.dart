@@ -58,6 +58,7 @@ class MyCard extends StatelessWidget {
                     fontFamily: 'Barlow',
                     fontWeight: FontWeight.bold,
                     fontSize: 26,
+                    color: Colors.white
                   ),
                 ),
               )

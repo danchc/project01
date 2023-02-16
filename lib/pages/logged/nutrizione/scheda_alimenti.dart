@@ -22,6 +22,7 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
   /* controller */
   final nomeAlimentoController = TextEditingController();
   final pesoController = TextEditingController();
+  final giornoController = TextEditingController();
 
   /* crea nuovo alimento */
   void creaNuovoAlimento() {
@@ -39,9 +40,9 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: TextField(
                     controller: nomeAlimentoController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'Nome esercizio'
+                        hintText: 'Nome alimento'
                     ),
                   ),
                 ),
@@ -49,11 +50,21 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
                 //input peso
                 TextField(
                   controller: pesoController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Peso (gr)'
                   ),
                 ),
+
+                //input peso
+                TextField(
+                  controller: giornoController,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Giorno della settimana'
+                  ),
+                ),
+
               ],
             ),
 
@@ -79,7 +90,13 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
 
   /* salva nuovo alimento */
   void salvaNuovoAlimento() {
-    Provider.of<NutrizioneData>(context, listen:false).addNuovoAlimento(widget.nomeScheda, nomeAlimentoController.text, pesoController.text);
+    Provider.of<NutrizioneData>(context, listen:false).
+      addNuovoAlimento(
+        widget.nomeScheda,
+        nomeAlimentoController.text,
+        pesoController.text,
+        giornoController.text,
+    );
     Navigator.pop(context);
     clear();
   }
@@ -87,6 +104,7 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
   void clear() {
     pesoController.clear();
     nomeAlimentoController.clear();
+    giornoController.clear();
   }
 
   @override
@@ -98,7 +116,7 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
             appBar: AppBar(
               centerTitle: true,
               title: Text(widget.nomeScheda,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
@@ -116,8 +134,19 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
               itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(value.getSchedaCorrente(widget.nomeScheda).alimenti[index].nome),
-                    subtitle: Text(value.getSchedaCorrente(widget.nomeScheda).alimenti[index].peso),
-                    contentPadding: EdgeInsets.all(15),
+                    subtitle:
+                    Row(
+                      children: [
+                        Text(
+                            value.getSchedaCorrente(widget.nomeScheda).alimenti[index].peso
+                        ),
+
+                        Text(
+                            value.getSchedaCorrente(widget.nomeScheda).alimenti[index].giorno
+                        ),
+                      ],
+                    ),
+                    contentPadding: const EdgeInsets.all(15),
                   );
               },
             ),
@@ -125,9 +154,11 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
             floatingActionButton: FloatingActionButton(
               backgroundColor: textColor,
               onPressed: creaNuovoAlimento,
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             ),
+
           ),
+
     );
   }
 }

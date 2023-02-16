@@ -38,46 +38,54 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
+      backgroundColor: Colors.transparent,
       /* corpo principale */
       body: _tabItems[currentIndex],
 
       /* nav bar */
-      bottomNavigationBar: Container(
-        color: Colors.black87,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-          child: GNav(
-            onTabChange: (index) => {
-              setState(() {currentIndex = index;})
-            },
-            haptic: true,
-            tabActiveBorder: Border.all(color: Colors.white, width: 1),
-            color: Colors.white,
-            activeColor: Colors.white,
-            gap: 8,
-            padding: const EdgeInsets.all(14),
-            /* singoli bottoni */
-            tabs: const [
-              GButton(
-                icon: Icons.home,
-                text: 'Home',
-              ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+            child: GNav(
+              onTabChange: (index) => {
+                setState(() {currentIndex = index;})
+              },
+              haptic: true,
+              tabActiveBorder: Border.all(color: Colors.white, width: 1),
+              color: Colors.white,
+              activeColor: Colors.white,
+              gap: 8,
+              padding: const EdgeInsets.all(14),
+              /* singoli bottoni */
+              tabs: const [
+                GButton(
+                  icon: Icons.home,
+                  text: 'Home',
+                ),
 
-              GButton(
-                icon: CupertinoIcons.timer,
-                text: 'Allenamenti',
-              ),
+                GButton(
+                  icon: CupertinoIcons.timer,
+                  text: 'Allenamenti',
+                ),
 
-              GButton(
-                icon: Icons.no_food_outlined,
-                text: 'Nutrizione',
-              ),
+                GButton(
+                  icon: Icons.no_food_outlined,
+                  text: 'Alimentazione',
+                ),
 
-              GButton(
-                icon: CupertinoIcons.gear_solid,
-                text: 'Impostazioni',
-              ),
-            ],
+                GButton(
+                  icon: CupertinoIcons.gear_solid,
+                  text: 'Impostazioni',
+                ),
+              ],
+            ),
           ),
         ),
       ),

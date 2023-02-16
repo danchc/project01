@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mcproject/components/my-schedaallenamento.dart';
 import 'package:mcproject/constants/constants.dart';
@@ -91,39 +92,129 @@ class _AllenamentiState extends State<Allenamenti> {
     return Consumer<AllenamentiData>(
       builder: (context, value, child) => Scaffold(
         backgroundColor: Colors.grey[200],
-        appBar: AppBar(
-          title: const Text(
-              'Allenamenti',
-              style: TextStyle(fontFamily: 'Barlow', fontWeight: FontWeight.bold, fontSize: 24)
+        body: SingleChildScrollView(
+          child: Center(
+            child: SafeArea(
+              child: Column(
+                children: [
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: Icon(
+                                      LineIcons.running,
+                                      size: 50,
+                                      color: textColor,
+                                    ),
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 5.0),
+                                    child: Container(
+                                      alignment: AlignmentDirectional.centerStart,
+                                      child: Text(
+                                        'Allenamenti',
+                                        style: TextStyle(
+                                            color: textColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30,
+                                            fontFamily: 'Barlow'
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              //
+                              FloatingActionButton(
+                                backgroundColor: textColor,
+                                onPressed: createNuovaScheda,
+                                child: Icon(Icons.add),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10,),
+                          Container(
+                            alignment: AlignmentDirectional.centerStart,
+                            child: Text(
+                              'Le tue schede allenamento',
+                              style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 20,
+                                  fontFamily: 'Barlow'
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+
+                    ),
+                  ),
+
+                  if(value.listaSchede.isEmpty) ... [
+                    Container(
+                      margin: const EdgeInsets.only(top: 80),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+
+                            SvgPicture.asset('assets/images/void.svg',height: 170,),
+
+                            const Text(
+                              'Sembra non ci sia niente',
+                              style: TextStyle(
+                                  fontFamily: 'Barlow',
+                                  fontSize: 18
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ]
+                  else ... [
+                    ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: value.listaSchede.length,
+                        itemBuilder: (context,index) {
+                          // singola scheda
+                          return GestureDetector(
+                            onTap: () => {
+                              goInSchedaAllenamenti(value.getListaSchede()[index].nome)
+                            },
+                            child:
+
+                            MySchedaAllenamento(
+                              nomeScheda: value.getListaSchede()[index].nome,
+                              icona: LineIcons.dumbbell,
+                              deleteFunction: (context) => deleteScheda(index),
+                            ),
+                          );
+                        }
+                    ),
+                  ],
+
+                ]
+              ),
+            ),
           ),
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          backgroundColor: colore,
         ),
 
 
-        body: ListView.builder(
-            itemCount: value.listaSchede.length,
-            itemBuilder: (context,index) {
-              // singola scheda
-              return GestureDetector(
-                onTap: () => {
-                  goInSchedaAllenamenti(value.getListaSchede()[index].nome)
-                },
-                child: MySchedaAllenamento(
-                    nomeScheda: value.getListaSchede()[index].nome,
-                    icona: LineIcons.dumbbell,
-                    deleteFunction: (context) => deleteScheda(index),
-                ),
-              );
-            }
-        ),
-
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: textColor,
-          onPressed: createNuovaScheda,
-          child: Icon(Icons.add),
-        ),
       ),
     );
 

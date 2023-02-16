@@ -8,7 +8,7 @@ import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/components/my-card.dart';
 import 'package:mcproject/data/allenamenti_data.dart';
 import 'package:provider/provider.dart';
-import '../../components/customListTile.dart';
+import '../../components/my-scheda-notizia.dart';
 import '../../data/nutrizione_data.dart';
 import '../../model/article_model.dart';
 import '../../services/api_service.dart';
@@ -135,7 +135,7 @@ class _PrincipaleState extends State<Principale> {
                 ),
               ),
 
-
+              /* cards */
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -157,13 +157,13 @@ class _PrincipaleState extends State<Principale> {
                 ],
               ),
 
-
-              Padding(
+              /* le news */
+              Padding (
                 padding: const EdgeInsets.symmetric(horizontal: 35.0),
                 child: Container(
                   alignment: AlignmentDirectional.centerStart,
                   child: const Text(
-                    'News ',
+                    'Esplora ',
                     style: TextStyle(
                       color: Colors.black87,
                       fontSize: 23,
@@ -173,32 +173,35 @@ class _PrincipaleState extends State<Principale> {
                   ),
                 ),
               ),
-                
-                FutureBuilder(
+
+              Container(
+                child: FutureBuilder(
                 future: client.getArticle(),
                 builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
 
                 if (snapshot.hasData) {
                   List<Article>? articles = snapshot.data;
                   return ListView.builder(
-                    scrollDirection: Axis.vertical,
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: articles?.length,
+                    scrollDirection: Axis.vertical,
+                    itemCount: 5,
                     itemBuilder: (context, index) =>
                         customListTile(articles![index], context),
                   );
                 } else if(snapshot.data == null){
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(
                         color: Colors.black,
                       ),
                     );
                 } else {
-                  return Center(
+                  return const Center(
                     child: Text('Ops! Si è verificato qualche errore.'),
                   );
                 }
                 }),
+              ),
             ],
           ),
         ),

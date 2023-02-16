@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/data/nutrizione_data.dart';
@@ -57,40 +58,129 @@ class _NutrizioneState extends State<Nutrizione> {
        builder: (context,value,child) =>
        Scaffold(
          backgroundColor: Colors.grey[200],
-         appBar: AppBar(
-           title: const Text(
-               'Nutrizione',
-             style: TextStyle(fontFamily: 'Barlow', fontWeight: FontWeight.bold, fontSize: 24)
+
+         body: SingleChildScrollView(
+           child: Center(
+             child: SafeArea(
+               child: Column(
+                 children: [
+
+                   /* header della pagina */
+                   Padding(
+                     padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+                     child: Container(
+                         margin: const EdgeInsets.only(top: 20),
+                         child: Column(
+                           children: [
+                             Row(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               children: [
+                                 Row(
+                                   children: [
+                                     Container(
+                                       alignment: Alignment.center,
+                                       child: Icon(
+                                         LineIcons.hamburger,
+                                         size: 50,
+                                         color: greenColor,
+                                       ),
+                                     ),
+
+                                     Padding(
+                                       padding: const EdgeInsets.only(right: 5.0),
+                                       child: Container(
+                                         alignment: AlignmentDirectional.centerStart,
+                                         child: Text(
+                                           'Alimentazione',
+                                           style: TextStyle(
+                                               color: greenColor,
+                                               fontWeight: FontWeight.bold,
+                                               fontSize: 30,
+                                               fontFamily: 'Barlow'
+                                           ),
+                                         ),
+                                       ),
+                                     ),
+                                   ],
+                                 ),
+
+                                 /* floating button */
+                                 FloatingActionButton(
+                                   backgroundColor: greenColor,
+                                   onPressed: createNuovaScheda,
+                                   child: Icon(Icons.add),
+                                 )
+                               ],
+                             ),
+                             const SizedBox(height: 10,),
+
+                             Container(
+                               alignment: AlignmentDirectional.centerStart,
+                               child: Text(
+                                 'Le tue schede alimentazione',
+                                 style: TextStyle(
+                                     color: greenColor,
+                                     fontSize: 20,
+                                     fontFamily: 'Barlow'
+                                 ),
+                               ),
+                             ),
+                           ],
+                         )
+
+                     ),
+                   ),
+
+                   if (value.listaSchedeNutrizione.isEmpty) ... [
+                     Container(
+                       margin: const EdgeInsets.only(top: 80),
+                       child: Center(
+                         child: Column(
+                           children: [
+                             SvgPicture.asset('assets/images/void1.svg',height: 170,),
+
+                             const Text(
+                               'Sembra non ci sia niente',
+                               style: TextStyle(
+                                 fontFamily: 'Barlow',
+                                 fontSize: 18
+                               ),
+                             ),
+                           ],
+                         ),
+                       ),
+                     )
+                   ]
+                   else ...[
+                     ListView.builder(
+                         physics: const NeverScrollableScrollPhysics(),
+                         shrinkWrap: true,
+                         scrollDirection: Axis.vertical,
+                         itemCount: value.getSchedeNutrizioni().length,
+                         itemBuilder: (context,index) {
+                           // singola scheda
+                           return GestureDetector(
+                             onTap: () => {
+                               Navigator.push(context,
+                                   MaterialPageRoute(builder: (context) => SchedaAlimenti(nomeScheda: value.getSchedeNutrizioni()[index].nome,)))
+                             },
+                             child: MySchedaAllenamento(
+                               nomeScheda: value.getSchedeNutrizioni()[index].nome,
+                               icona: LineIcons.beer,
+                               deleteFunction: (context) => deleteScheda(index),
+                             ),
+                           );
+                         }
+                     ),
+                   ],
+                   /* lista delle schede */
+
+                 ],
+               ),
+             ),
            ),
-           automaticallyImplyLeading: false,
-           centerTitle: true,
-           backgroundColor: colore,
          ),
 
-
-         body: ListView.builder(
-             itemCount: value.getSchedeNutrizioni().length,
-             itemBuilder: (context,index) {
-               // singola scheda
-               return GestureDetector(
-                 onTap: () => {
-                    Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SchedaAlimenti(nomeScheda: value.getSchedeNutrizioni()[index].nome,)))
-                 },
-                 child: MySchedaAllenamento(
-                   nomeScheda: value.getSchedeNutrizioni()[index].nome,
-                   icona: LineIcons.beer,
-                   deleteFunction: (context) => deleteScheda(index),
-                 ),
-               );
-             }
-         ),
-
-         floatingActionButton: FloatingActionButton(
-           backgroundColor: textColor,
-           onPressed: createNuovaScheda,
-           child: Icon(Icons.add),
-         ),
        ),
      );
   }

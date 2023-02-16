@@ -29,7 +29,7 @@ class NutrizioneData extends ChangeNotifier {
   }
 
   /* add nuovo alimento */
-  void addNuovoAlimento(String nomeScheda, String nomeAlimento, String peso) {
+  void addNuovoAlimento(String nomeScheda, String nomeAlimento, String peso, String giorno) {
 
     /* prendo la scheda corrente */
     Nutrizione corrente = getSchedaCorrente(nomeScheda);
@@ -37,7 +37,7 @@ class NutrizioneData extends ChangeNotifier {
     /* aggiungo alimento alla lista nella scheda corrente */
 
     corrente.alimenti.add(
-      Alimento(nome: nomeAlimento, peso: peso)
+      Alimento(nome: nomeAlimento, peso: peso, giorno: giorno)
     );
 
   notifyListeners();
