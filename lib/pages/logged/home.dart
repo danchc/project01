@@ -1,22 +1,17 @@
-import 'dart:ffi';
+import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/components/my-card.dart';
 import 'package:mcproject/data/allenamenti_data.dart';
-import 'package:mcproject/data/workout_data.dart';
-import 'package:mcproject/pages/logged/nutrizione/nutrizione.dart';
-import 'package:mcproject/pages/logged/scheda_allenamenti.dart';
 import 'package:provider/provider.dart';
+import '../../components/customListTile.dart';
 import '../../data/nutrizione_data.dart';
-import '/pages/login_page.dart';
-import 'package:fl_chart/fl_chart.dart';
+import '../../model/article_model.dart';
+import '../../services/api_service.dart';
 
 class Principale extends StatefulWidget {
   const Principale({Key? key}) : super(key: key);
@@ -33,6 +28,8 @@ class _PrincipaleState extends State<Principale> {
 
   /* informazioni utente */
   final user = FirebaseAuth.instance.currentUser!;
+
+  ApiService client = ApiService();
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +117,8 @@ class _PrincipaleState extends State<Principale> {
                 ),
               ),
 
+
+              /* il tuo sommario */
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
                 child: Container(
@@ -159,31 +158,47 @@ class _PrincipaleState extends State<Principale> {
               ),
 
 
-              const SizedBox(height: 15,),
-
-
-              /* body
-              Column(
-                children: [
-                  Center(
-                    child: SvgPicture.asset('assets/images/void.svg',
-                      height: 170,),
-                  ),
-
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Text(
-                      'Mi sembra ancora vuoto!',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Barlow',
-                      ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                child: Container(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: const Text(
+                    'News ',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Barlow',
                     ),
-                  )
-                ],
-              ),*/
+                  ),
+                ),
+              ),
+                
+                FutureBuilder(
+                future: client.getArticle(),
+                builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
 
-
+                if (snapshot.hasData) {
+                  List<Article>? articles = snapshot.data;
+                  return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: articles?.length,
+                    itemBuilder: (context, index) =>
+                        customListTile(articles![index], context),
+                  );
+                } else if(snapshot.data == null){
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                      ),
+                    );
+                } else {
+                  return Center(
+                    child: Text('Ops! Si è verificato qualche errore.'),
+                  );
+                }
+                }),
             ],
           ),
         ),

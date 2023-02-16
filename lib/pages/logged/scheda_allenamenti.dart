@@ -5,9 +5,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:mcproject/components/my-schedaallenamento.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/data/allenamenti_data.dart';
-import 'package:mcproject/data/database.dart';
 import 'package:mcproject/pages/logged/add_allenamento.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mcproject/pages/logged/scheda_sessioni.dart';
 import 'package:provider/provider.dart';
 

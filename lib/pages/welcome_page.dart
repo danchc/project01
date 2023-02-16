@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import '/components/my-button.dart';
-import '/pages/login_page.dart';
 import '/pages/register_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
-
-  //metodo per login
-  void signUserIn() {}
-
-  //metodo per signup
-  void signUserUp() {}
 
   //colore principale
   static const color = Color(0xff2b8efd);

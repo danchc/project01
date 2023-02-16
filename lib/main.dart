@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'data/workout_data.dart';
 import 'pages/welcome_page.dart';
 import 'pages/logged/home_page.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:google_sign_in/google_sign_in.dart';

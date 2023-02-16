@@ -86,6 +86,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "carousel_slider",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/carousel_slider-4.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "characters",
       "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.2.1",
       "packageUri": "lib/",
@@ -158,22 +164,10 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "equatable",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/equatable-2.0.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "fake_async",
       "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
-    },
-    {
-      "name": "ffi",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/ffi-2.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
     },
     {
       "name": "file",
@@ -224,12 +218,6 @@
       "languageVersion": "2.19"
     },
     {
-      "name": "fl_chart",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/fl_chart-0.60.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
       "name": "flutter",
       "rootUri": "file:///C:/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -270,6 +258,12 @@
       "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/frontend_server_client-3.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "get",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/get-4.6.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
     },
     {
       "name": "glob",
@@ -326,16 +320,16 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "hive_flutter",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/hive_flutter-1.1.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "hive_generator",
       "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/hive_generator-1.1.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "http",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "http_multi_server",
@@ -440,52 +434,10 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "path_provider",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider-2.0.12",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
-    },
-    {
-      "name": "path_provider_android",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.0.22",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
-    },
-    {
-      "name": "path_provider_foundation",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.1.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "path_provider_linux",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_linux-2.1.8",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "path_provider_platform_interface",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_platform_interface-2.0.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "path_provider_windows",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_windows-2.1.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
       "name": "petitparser",
       "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/petitparser-5.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
-    },
-    {
-      "name": "platform",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/platform-3.1.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "plugin_platform_interface",
@@ -498,12 +450,6 @@
       "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/pool-1.5.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
-    },
-    {
-      "name": "process",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/process-4.2.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
     },
     {
       "name": "provider",
@@ -650,14 +596,26 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "win32",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/win32-3.1.3",
+      "name": "webview_flutter",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter-3.0.4",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.14"
     },
     {
-      "name": "xdg_directories",
-      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/xdg_directories-1.0.0",
+      "name": "webview_flutter_android",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_android-2.10.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "webview_flutter_platform_interface",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_platform_interface-1.9.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "webview_flutter_wkwebview",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_wkwebview-2.9.5",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -680,7 +638,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2023-02-16T13:51:30.851181Z",
+  "generated": "2023-02-16T16:07:07.884691Z",
   "generator": "pub",
   "generatorVersion": "2.19.1"
 }
