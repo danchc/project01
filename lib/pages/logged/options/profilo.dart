@@ -3,8 +3,12 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:mcproject/components/my-option-card.dart';
+import 'package:mcproject/pages/logged/options/bug_report_page.dart';
 import 'package:mcproject/pages/logged/options/profilo_page.dart';
+
+import 'crediti_page.dart';
 
 class Profilo extends StatefulWidget {
   const Profilo({Key? key}) : super(key: key);
@@ -112,11 +116,11 @@ class _ProfiloState extends State<Profilo> {
             ),
 
             MyOptionCard(
-                descrizione: 'Impostazioni',
-                icona: CupertinoIcons.gear_solid,
+                descrizione: 'Segnala un bug',
+                icona: LineIcons.bug,
                 onTap: () => {
                 Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AccountDetails()))
+                MaterialPageRoute(builder: (context) => BugReportPage()))
                 },
             ),
 
@@ -125,7 +129,7 @@ class _ProfiloState extends State<Profilo> {
                 icona: CupertinoIcons.info_circle_fill,
                 onTap: () => {
                 Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AccountDetails()))
+                MaterialPageRoute(builder: (context) => CreditsPage()))
               },
             ),
 
