@@ -2,10 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:mcproject/components/my-readonly-textfield.dart';
-import 'package:mcproject/components/my-textfield.dart';
-import 'package:mcproject/constants/constants.dart';
 
 class AccountDetails extends StatefulWidget {
   AccountDetails({Key? key}) : super(key: key);
