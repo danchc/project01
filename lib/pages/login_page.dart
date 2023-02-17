@@ -23,14 +23,14 @@ class _LoginPageState extends State<LoginPage> {
 
   static String id = "sign_in";
 
+  /* controllers */
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
+  /* metodo per il login */
   void signIn() async {
-
     if(_formKey.currentState!.validate()){
       //loading
       showDialog(
@@ -42,9 +42,8 @@ class _LoginPageState extends State<LoginPage> {
           }
       );
 
-      log(emailController.text);
-      log(passwordController.text);
-
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
       //prova a controllare se le credenziali sono corrette
       try {
         await FirebaseAuth
@@ -53,7 +52,12 @@ class _LoginPageState extends State<LoginPage> {
           email: emailController.text,
           password: passwordController.text,
         );
-        Navigator.of(context).pop();
+
+        /* controllo dati utente */
+       log(FirebaseAuth.instance.currentUser!.emailVerified.toString());
+        log(FirebaseAuth.instance.currentUser!.displayName.toString());
+        log(FirebaseAuth.instance.currentUser!.email.toString());
+        log(FirebaseAuth.instance.currentUser!.photoURL.toString());
       } on FirebaseAuthException catch (e) {
         Navigator.pop(context);
         if(e.code == 'user-not-found') {
@@ -75,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  /* metodo per mostrare il messaggio di errore dell'email */
   void wrongEmailMessage() {
     showDialog(
         context: context,
@@ -86,6 +91,8 @@ class _LoginPageState extends State<LoginPage> {
         }
     );
   }
+
+  /* metodo per mostrare il messaggio di errore della password */
   void wrongPasswordMessage() {
     showDialog(
         context: context,
@@ -98,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
+  /* metodo per gestire il login con google */
   void googleSignIn() async {
     AuthService().googleSignIn();
     Navigator.of(context).pop(id);
@@ -117,6 +124,7 @@ class _LoginPageState extends State<LoginPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+
                 //zona tasto indietro
                 AppBar(
                   leading: const BackButton(

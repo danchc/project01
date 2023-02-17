@@ -1,8 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mcproject/components/my-textfield.dart';
 
 class AccountDetails extends StatelessWidget {
-  const AccountDetails({Key? key}) : super(key: key);
+  AccountDetails({Key? key}) : super(key: key);
+
+  /* informazioni utente */
+  final user = FirebaseAuth.instance.currentUser!;
+  final String photoURL = 'assets/images/mainicon.png';
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,7 @@ class AccountDetails extends StatelessWidget {
                   radius: 90,
                   child: CircleAvatar(
                     radius: 85,
-                    backgroundImage: AssetImage('assets/images/mainicon.png'),
+                    backgroundImage: AssetImage(photoURL),
                     child: Container(
                       alignment: Alignment.bottomRight,
                       child: Container(
@@ -59,6 +65,31 @@ class AccountDetails extends StatelessWidget {
           Expanded(
             child: Container(
                 color: Colors.grey[300],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Container(
+                  color: Colors.blueAccent,
+                  child: Column(
+                    children: [
+
+                     TextField(
+                       readOnly: true,
+                       style: TextStyle(
+
+                       ),
+                       decoration: InputDecoration(
+                         filled: true,
+                         fillColor: Colors.white,
+                         border: ,
+
+                       ),
+                     )
+
+
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
 

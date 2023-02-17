@@ -48,6 +48,8 @@ dependencies:
   webview_flutter: ^3.0.4
   carousel_slider: ^4.1.1
   get: ^4.6.5
+  material_dialogs: ^1.1.4
+  lottie: ^2.2.0
 
 dev_dependencies:
   flutter_test:
