@@ -25,6 +25,9 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
   final pesoController = TextEditingController();
   final giornoController = TextEditingController();
 
+  /* key form */
+  final _formKey = GlobalKey<FormState>();
+
   /* crea nuovo alimento */
   void creaNuovoAlimento() {
     showDialog(
@@ -32,41 +35,65 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
         builder: (context) => AlertDialog(
           title: Text('Aggiungi alimento'),
           content:
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-
-                //input nome alimento
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5.0),
-                  child: TextField(
-                    controller: nomeAlimentoController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Nome alimento'
+            Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if(value == null || value.isEmpty) {
+                          return '* Obbligatorio';
+                        }
+                        return null;
+                      },
+                      controller: nomeAlimentoController,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Nome alimento'
+                      ),
                     ),
                   ),
-                ),
 
-                //input peso
-                TextField(
-                  controller: pesoController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Peso (gr)'
+                  //input peso
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if(value == null || value.isEmpty) {
+                          return '* Obbligatorio';
+                        }
+                        return null;
+                      },
+                      controller: pesoController,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Peso (gr)'
+                      ),
+                    ),
                   ),
-                ),
 
-                //input peso
-                TextField(
-                  controller: giornoController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Giorno della settimana'
+                  //input peso
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if(value == null || value.isEmpty) {
+                          return '* Obbligatorio';
+                        }
+                        return null;
+                      },
+                      controller: giornoController,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Giorno della settimana'
+                      ),
+                    ),
                   ),
-                ),
-
-              ],
+                ],
+              ),
             ),
 
           actions: [
@@ -91,15 +118,18 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
 
   /* salva nuovo alimento */
   void salvaNuovoAlimento() {
-    Provider.of<NutrizioneData>(context, listen:false).
+    if(_formKey.currentState!.validate()){
+      Provider.of<NutrizioneData>(context, listen:false).
       addNuovoAlimento(
         widget.nomeScheda,
         nomeAlimentoController.text,
         pesoController.text,
         giornoController.text,
-    );
-    Navigator.pop(context);
-    clear();
+      );
+      Navigator.pop(context);
+      clear();
+    }
+
   }
 
   void clear() {
@@ -146,7 +176,7 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
             ),
 
             floatingActionButton: FloatingActionButton(
-              backgroundColor: textColor,
+              backgroundColor: greenColor,
               onPressed: creaNuovoAlimento,
               child: const Icon(Icons.add),
             ),

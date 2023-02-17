@@ -5,7 +5,7 @@ import '../pages/logged/articles_details_page.dart';
 
 Widget customListTile(Article article, BuildContext context) {
   return Container(
-    margin: EdgeInsets.all(10),
+    margin: EdgeInsets.symmetric(horizontal: 10),
     child: InkWell(
       enableFeedback: true,
       onTap: () {

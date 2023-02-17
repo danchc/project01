@@ -18,7 +18,7 @@ class CreditsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(
-          color: Colors.black,
+          color: Colors.white,
         ),
         centerTitle: true,
         title: const Text(
@@ -107,8 +107,11 @@ class CreditsPage extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(top: 25),
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255,28,28,30),
                       borderRadius: BorderRadius.circular(30),
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 2,
+                      ),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -119,7 +122,7 @@ class CreditsPage extends StatelessWidget {
                           child: Text(
                             'Sito Web',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontFamily: 'Barlow',
                               fontWeight: FontWeight.bold,
                               fontSize: 28
@@ -131,7 +134,7 @@ class CreditsPage extends StatelessWidget {
                             onPressed: () async => {
                               openUrl("https://danchc.github.io"),
                             },
-                            icon: Icon(Icons.arrow_forward,color: Colors.white,),
+                            icon: Icon(Icons.arrow_forward,color: Colors.black,),
                   )
 
                       ],

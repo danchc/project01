@@ -30,6 +30,10 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
   final numeroRepsController = TextEditingController();
   final pesoController = TextEditingController();
 
+  /* key form */
+  final _formKey = GlobalKey<FormState>();
+
+
   //crea nuovo esercizio
   void aggiungiEsercizio() {
     showDialog(
@@ -41,50 +45,84 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+
+              Form(
+                key: _formKey,
+                child: Column(
+                    children: [
+                      Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: TextFormField(
+                        validator: (value) {
+                          if(value == null || value.isEmpty) {
+                            return '* Obbligatorio';
+                          }
+                      return null;
+                    },
+                    controller: nomeEsercizioController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Nome esercizio'
+                    ),
+                  ),
+                ),
+
+                      //input numero sets
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: TextFormField(
+                          validator: (value) {
+                            if(value == null || value.isEmpty) {
+                              return '* Obbligatorio';
+                            }
+                            return null;
+                          },
+                          controller: numeroSetsController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Numero set'
+                          ),
+                        ),
+                      ),
+
+                      //input numero reps
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: TextFormField(
+                          validator: (value) {
+                            if(value == null || value.isEmpty) {
+                              return '* Obbligatorio';
+                            }
+                            return null;
+                          },
+                          controller: numeroRepsController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Numero reps'
+                          ),
+                        ),
+                      ),
+
+                      //input peso
+                      TextFormField(
+                        validator: (value) {
+                          if(value == null || value.isEmpty) {
+                            return '* Obbligatorio';
+                          }
+                          return null;
+                        },
+                        controller: pesoController,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Peso (KG)'
+                        ),
+                      ),
+                  ],
+                )
+
+              )
               //input nome esercizio
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5.0),
-                child: TextField(
-                  controller: nomeEsercizioController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Nome esercizio'
-                  ),
-                ),
-              ),
 
-              //input numero sets
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5.0),
-                child: TextField(
-                  controller: numeroSetsController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Numero set'
-                  ),
-                ),
-              ),
-
-              //input numero reps
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5.0),
-                child: TextField(
-                  controller: numeroRepsController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Numero reps'
-                  ),
-                ),
-              ),
-
-              //input peso
-              TextField(
-                controller: pesoController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Peso (KG)'
-                ),
-              ),
             ],
           ),
 
@@ -109,19 +147,21 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
 
   }
 
+  /* metodo per salvare esercizio */
   void salvaEsercizio() {
     String nomeEsercizio = nomeEsercizioController.text;
     String numeroSets = numeroSetsController.text;
     String numeroReps = numeroRepsController.text;
     String peso = pesoController.text;
 
-    Provider.of
+    if(_formKey.currentState!.validate()) {
+      Provider.of
       <AllenamentiData>(context, listen:false)
-    .addEsercizio(widget.nomeScheda, widget.nomeSessione, nomeEsercizio, numeroSets, numeroReps, peso);
+          .addEsercizio(widget.nomeScheda, widget.nomeSessione, nomeEsercizio, numeroSets, numeroReps, peso);
 
-    Navigator.pop(context);
-    clear();
-
+      Navigator.pop(context);
+      clear();
+    }
   }
 
   //elimina esercizio

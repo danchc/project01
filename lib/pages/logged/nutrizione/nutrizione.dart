@@ -22,14 +22,26 @@ class _NutrizioneState extends State<Nutrizione> {
   /* controller principale */
   final schedaNutrizioneController = TextEditingController();
 
+  /* key form */
+  final _formKey = GlobalKey<FormState>();
+
   //funzione che riporta alla scheda per aggiungere scheda
   void createNuovaScheda() {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Aggiungi nuova scheda'),
-          content: TextField(
-            controller: schedaNutrizioneController,
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              validator: (value) {
+                if(value == null || value.isEmpty) {
+                  return '* Obbligatorio';
+                }
+                return null;
+              },
+              controller: schedaNutrizioneController,
+            ),
           ),
           actions: [
             Center(
@@ -58,9 +70,12 @@ class _NutrizioneState extends State<Nutrizione> {
 
   /* save scheda */
   void saveScheda() {
-    Provider.of<NutrizioneData>(context, listen:false).addSchedaNutrizione(schedaNutrizioneController.text);
-    Navigator.pop(context);
-    schedaNutrizioneController.clear();
+    if(_formKey.currentState!.validate()) {
+      Provider.of<NutrizioneData>(context, listen:false).addSchedaNutrizione(schedaNutrizioneController.text);
+      Navigator.pop(context);
+      schedaNutrizioneController.clear();
+    }
+
   }
 
   @override

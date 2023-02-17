@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,13 +42,13 @@ class _PrincipaleState extends State<Principale> {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
-            children: [
+            children: <Widget>[
               /* giorno della settimana */
               Container(
-                padding: const EdgeInsets.only(top: 40),
+                color: Colors.blueAccent,
+                padding: const EdgeInsets.only(top: 50),
                 width: double.infinity,
                 alignment: Alignment.center,
-                color: colore,
                 child: Text(
                   formattedTime,
                   style: const TextStyle(
@@ -61,11 +62,12 @@ class _PrincipaleState extends State<Principale> {
 
               /* header */
               Container(
-                width: double.infinity,
-                height: 120,
                 child: Center(
                   child: Container(
-                    color: colore,
+                    decoration: BoxDecoration(
+                      color: Colors.blueAccent,
+                    ),
+                    height: 150,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -103,7 +105,7 @@ class _PrincipaleState extends State<Principale> {
                             color: Colors.white,
                           ),
                           child: Text(
-                            user.email![0].toUpperCase(),
+                            user.displayName![0].toUpperCase(),
                             style: TextStyle(
                               fontSize: 40,
                             ),
@@ -118,16 +120,18 @@ class _PrincipaleState extends State<Principale> {
               ),
 
 
+
               /* il tuo sommario */
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 35.0),
                 child: Container(
+                  padding: EdgeInsets.only(top: 20.0),
                   alignment: AlignmentDirectional.centerStart,
                   child: const Text(
                     'Il tuo sommario ',
                     style: TextStyle(
                       color: Colors.black87,
-                      fontSize: 23,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Barlow',
                     ),
@@ -135,26 +139,38 @@ class _PrincipaleState extends State<Principale> {
                 ),
               ),
 
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Divider(
+                  height: 20,
+                  thickness: 0.5,
+                  color: Colors.black,
+                ),
+              ),
+
               /* cards */
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
 
-                  MyCard(
-                    descrizione: 'I tuoi allenamenti',
-                    colore: Colors.white,
-                    icona: Icons.sports_gymnastics,
-                    numero: Provider.of<AllenamentiData>(context, listen: false).getListaSchede().length,
-                  ),
+                    MyCard(
+                      descrizione: 'I tuoi allenamenti',
+                      colore: Colors.white,
+                      icona: Icons.sports_gymnastics,
+                      numero: Provider.of<AllenamentiData>(context, listen: false).getListaSchede().length,
+                    ),
 
-                  MyCard(
-                    descrizione: 'La tua alimentazione',
-                    colore: Colors.white,
-                    icona: Icons.emoji_food_beverage,
-                    numero: Provider.of<NutrizioneData>(context, listen: false).getSchedeNutrizioni().length,
-                  ),
+                    MyCard(
+                      descrizione: 'La tua alimentazione',
+                      colore: Colors.white,
+                      icona: Icons.emoji_food_beverage,
+                      numero: Provider.of<NutrizioneData>(context, listen: false).getSchedeNutrizioni().length,
+                    ),
 
-                ],
+                  ],
+                ),
               ),
 
               /* le news */
@@ -166,7 +182,7 @@ class _PrincipaleState extends State<Principale> {
                     'Esplora ',
                     style: TextStyle(
                       color: Colors.black87,
-                      fontSize: 23,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Barlow',
                     ),
@@ -174,34 +190,41 @@ class _PrincipaleState extends State<Principale> {
                 ),
               ),
 
-              Container(
-                child: FutureBuilder(
-                future: client.getArticle(),
-                builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
-
-                if (snapshot.hasData) {
-                  List<Article>? articles = snapshot.data;
-                  return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: 5,
-                    itemBuilder: (context, index) =>
-                        customListTile(articles![index], context),
-                  );
-                } else if(snapshot.data == null){
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.black,
-                      ),
-                    );
-                } else {
-                  return const Center(
-                    child: Text('Ops! Si è verificato qualche errore.'),
-                  );
-                }
-                }),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Divider(
+                  height: 20,
+                  thickness: 0.5,
+                  color: Colors.black,
+                ),
               ),
+
+              FutureBuilder(
+              future: client.getArticle(),
+              builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
+
+              if (snapshot.hasData) {
+                List<Article>? articles = snapshot.data;
+                return ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: 5,
+                  itemBuilder: (context, index) =>
+                      customListTile(articles![index], context),
+                );
+              } else if(snapshot.data == null){
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ),
+                  );
+              } else {
+                return const Center(
+                  child: Text('Ops! Si è verificato qualche errore.'),
+                );
+              }
+              }),
             ],
           ),
         ),

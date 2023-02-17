@@ -25,12 +25,17 @@ class _SchedaAllenamentoState extends State<SchedaAllenamento> {
   //controller della sessione
   final sessioneController = TextEditingController();
 
+  /* key form */
+  final _formKey = GlobalKey<FormState>();
 
   //aggiungiamo una nuova sessione alla lista
   void salvaSessione() {
-    Provider.of<AllenamentiData>(context, listen: false).addSessione(widget.nomeScheda, sessioneController.text);
-    Navigator.pop(context);
-    clear();
+    if(_formKey.currentState!.validate()){
+      Provider.of<AllenamentiData>(context, listen: false).addSessione(widget.nomeScheda, sessioneController.text);
+      Navigator.pop(context);
+      clear();
+    }
+
   }
 
   //crea sessione
@@ -39,8 +44,17 @@ class _SchedaAllenamentoState extends State<SchedaAllenamento> {
         context: context,
         builder: (context) => AlertDialog(
           title: Text('Crea nuova sessione'),
-          content: TextField(
-            controller: sessioneController,
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              validator: (value) {
+                if(value == null || value.isEmpty) {
+                  return '* Obbligatorio';
+                }
+                return null;
+              },
+              controller: sessioneController,
+            ),
           ),
           actions: [
             Center(

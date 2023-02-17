@@ -18,6 +18,28 @@ class MySchedaAlimento extends StatelessWidget {
     required this.deleteFunction
   }) : super(key: key);
 
+  Color coloreChip = greenColor;
+
+  Color getColore(String giorno) {
+    if(giorno == 'lunedi' || giorno == 'lunedì') {
+      coloreChip = Colors.blueAccent;
+    } else if(giorno == 'martedi' || giorno == 'martedì') {
+      coloreChip = Colors.deepOrangeAccent;
+    } else if(giorno == 'mercoledi' || giorno == 'mercoledì') {
+      coloreChip = Colors.redAccent;
+    } else if(giorno == 'giovedi' || giorno == 'giovedì') {
+      coloreChip = Colors.deepPurpleAccent;
+    } else if(giorno == 'venerdi' || giorno == 'venerdì') {
+      coloreChip = Colors.green;
+    } else if(giorno == 'sabato') {
+      coloreChip = Colors.yellow;
+    } else if(giorno == 'domenica') {
+      coloreChip = Colors.pinkAccent;
+    }
+
+    return coloreChip;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -78,7 +100,7 @@ class MySchedaAlimento extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        backgroundColor: greenColor,
+                        backgroundColor: getColore(giornoDellaSettimana.toLowerCase()),
                       ),
 
                     ],

@@ -27,8 +27,8 @@ class _AllenamentiState extends State<Allenamenti> {
   //controller
   final  _controller = TextEditingController();
 
-  //lista
-  List schedeAllenamento = [];
+  /* key form */
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -49,8 +49,10 @@ class _AllenamentiState extends State<Allenamenti> {
   }*/
 
   void saveNuovaScheda() {
-    Provider.of<AllenamentiData>(context, listen: false).addScheda(_controller.text);
-    Navigator.pop(context);
+    if(_formKey.currentState!.validate()) {
+      Provider.of<AllenamentiData>(context, listen: false).addScheda(_controller.text);
+      Navigator.pop(context);
+    }
   }
 
   //funzione che riporta alla scheda per aggiungere scheda
@@ -59,8 +61,17 @@ class _AllenamentiState extends State<Allenamenti> {
         context: context,
         builder: (context) => AlertDialog(
           title: Text('Aggiungi nuova scheda'),
-          content: TextField(
-            controller: _controller,
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              validator: (value) {
+                if(value == null || value.isEmpty) {
+                  return '* Obbligatorio';
+                }
+                return null;
+              },
+              controller: _controller,
+            ),
           ),
           actions: [
             Center(
@@ -86,9 +97,6 @@ class _AllenamentiState extends State<Allenamenti> {
 
   //funzione per eliminare scheda
   void deleteScheda(int index) {
-    setState(() {
-      schedeAllenamento.removeAt(index);
-    });
   }
 
   //funzione per andare alla prossima scheda
