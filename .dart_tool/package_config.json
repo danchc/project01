@@ -584,6 +584,54 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "url_launcher",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher-6.1.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "url_launcher_android",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_android-6.0.23",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "url_launcher_ios",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_ios-6.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "url_launcher_linux",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_linux-3.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "url_launcher_macos",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_macos-3.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_platform_interface-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "url_launcher_web",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_web-2.0.14",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "url_launcher_windows",
+      "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_windows-3.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vector_graphics",
       "rootUri": "file:///C:/Users/erdat/AppData/Local/Pub/Cache/hosted/pub.dev/vector_graphics-1.0.1",
       "packageUri": "lib/",
@@ -662,7 +710,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2023-02-17T10:30:44.808555Z",
+  "generated": "2023-02-17T14:36:22.441903Z",
   "generator": "pub",
   "generatorVersion": "2.19.1"
 }

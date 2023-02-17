@@ -148,7 +148,7 @@ class _PrincipaleState extends State<Principale> {
                   ),
 
                   MyCard(
-                    descrizione: 'La tua dieta',
+                    descrizione: 'La tua alimentazione',
                     colore: Colors.white,
                     icona: Icons.emoji_food_beverage,
                     numero: Provider.of<NutrizioneData>(context, listen: false).getSchedeNutrizioni().length,

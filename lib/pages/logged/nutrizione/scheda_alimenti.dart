@@ -76,11 +76,11 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
                 elevation: 18.0,
                 clipBehavior: Clip.antiAlias,
                 child: MaterialButton(
+                    onPressed: salvaNuovoAlimento,
                     child: const Text(
                       'Salva',
                       style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: salvaNuovoAlimento
+                    )
                 ),
               ),
             ),

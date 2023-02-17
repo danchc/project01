@@ -2,6 +2,9 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:mcproject/pages/logged/home.dart';
 import 'package:mcproject/pages/logged/home_page.dart';
 import 'package:mcproject/pages/register_page.dart';
@@ -59,49 +62,32 @@ class _LoginPageState extends State<LoginPage> {
         log(FirebaseAuth.instance.currentUser!.email.toString());
         log(FirebaseAuth.instance.currentUser!.photoURL.toString());
       } on FirebaseAuthException catch (e) {
-        Navigator.pop(context);
-        if(e.code == 'user-not-found') {
-          wrongEmailMessage();
-        } else if(e.code == 'wrong-password') {
-          wrongPasswordMessage();
-        } else {
-          /*
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('Errore'),
-              );
-            }
-        ); */
-        }
+        wrongMessage();
       }
     }
   }
 
   /* metodo per mostrare il messaggio di errore dell'email */
-  void wrongEmailMessage() {
-    showDialog(
+  void wrongMessage() {
+    Dialogs.bottomMaterialDialog(
         context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('E-mail o password non corretti'),
-            alignment: Alignment.center,
-          );
-        }
-    );
-  }
-
-  /* metodo per mostrare il messaggio di errore della password */
-  void wrongPasswordMessage() {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('E-mail o password non corretta'),
-            alignment: Alignment.center,
-          );
-        }
+        color: Colors.white,
+        msg: 'E-mail o password non corrette',
+        title: 'Errore!',
+        lottieBuilder: Lottie.asset(
+          'assets/animations/lottierr.json',
+          fit: BoxFit.contain,
+        ),
+        actions: [
+          IconsButton(
+            onPressed: () {Navigator.pop(context);},
+            text: 'Riprova',
+            iconData: Icons.error_outline_sharp,
+            color: Colors.red,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]
     );
   }
 

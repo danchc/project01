@@ -63,9 +63,20 @@ class _AllenamentiState extends State<Allenamenti> {
             controller: _controller,
           ),
           actions: [
-            MaterialButton(
-                child: Text('Salva'),
-                onPressed: saveNuovaScheda,
+            Center(
+              child: Material(
+                color: Colors.black,
+                shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(22.0) ),
+                elevation: 18.0,
+                clipBehavior: Clip.antiAlias,
+                child: MaterialButton(
+                  onPressed: saveNuovaScheda,
+                  child: const Text(
+                    'Salva',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
             ),
           ],
         ));

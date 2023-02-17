@@ -27,14 +27,25 @@ class _NutrizioneState extends State<Nutrizione> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Aggiungi nuova scheda'),
+          title: const Text('Aggiungi nuova scheda'),
           content: TextField(
             controller: schedaNutrizioneController,
           ),
           actions: [
-            MaterialButton(
-              child: Text('Salva'),
-              onPressed: saveScheda,
+            Center(
+              child: Material(
+                color: Colors.black,
+                shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(22.0) ),
+                elevation: 18.0,
+                clipBehavior: Clip.antiAlias,
+                child: MaterialButton(
+                  onPressed: saveScheda,
+                  child: const Text(
+                    'Salva',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
             ),
           ],
         ));

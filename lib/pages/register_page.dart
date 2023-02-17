@@ -197,7 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 20,),
 
                 //testo secondario
-                const Text('Inserisci i dati per essere dei nostri',
+                const Text('Inserisci i dati per essere dei nostri!',
                   style:
                   TextStyle(
                       fontFamily: 'Barlow',
@@ -216,6 +216,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           key: _formKey,
                           child: Column(
                             children: [
+                              const SizedBox(height: 20,),
                               MyTextField(
                                   nome: 'Inserisci il tuo username',
                                   hide: false,
