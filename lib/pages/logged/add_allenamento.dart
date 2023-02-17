@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:mcproject/components/my-button.dart';
 import 'package:mcproject/components/my-numberfield.dart';
 import 'package:mcproject/components/my-textfield.dart';
-import 'package:mcproject/pages/logged/scheda_allenamenti.dart';
+import 'package:mcproject/pages/logged/allenamenti/scheda_allenamenti.dart';
 
 
 class AddAllenamento extends StatelessWidget {

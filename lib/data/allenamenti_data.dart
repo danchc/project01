@@ -43,4 +43,16 @@ class AllenamentiData extends ChangeNotifier{
 
     notifyListeners();
   }
+
+  /* aggiungi un esercizio */
+  void addEsercizio(String nomeScheda, String nomeSessione, String nomeEsercizio, String sets, String reps, String peso) {
+    Sessione sessioneCorrente = getSessioneCorrente(nomeScheda, nomeSessione);
+
+    /* aggiungo esercizio alla sessione corrente */
+    sessioneCorrente.esercizi.add(
+      Esercizio(nome: nomeEsercizio, reps: reps, sets: sets, peso: peso)
+    );
+
+    notifyListeners();
+  }
 }

@@ -2,9 +2,11 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:material_dialogs/dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:mcproject/pages/forgot_page.dart';
 import 'package:mcproject/pages/logged/home.dart';
 import 'package:mcproject/pages/logged/home_page.dart';
 import 'package:mcproject/pages/register_page.dart';
@@ -31,6 +33,10 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  /* altre variabili */
+  bool hide = true;
+  IconData icona = LineIcons.eye;
 
   /* metodo per il login */
   void signIn() async {
@@ -98,6 +104,27 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    hide = true;
+    icona = LineIcons.eye;
+    super.initState();
+  }
+
+  void hidePassword() {
+    setState(() {
+      if(hide) {
+        hide = false;
+        icona = LineIcons.eyeSlash;
+      } else {
+        hide = true;
+        icona = LineIcons.eye;
+      }
+    });
+
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       //colore sfondo
@@ -156,9 +183,11 @@ class _LoginPageState extends State<LoginPage> {
                               //password input
                               MyTextField(
                                   nome: 'Inserisci la tua password',
-                                  hide: true,
+                                  hide: hide,
                                   controller: passwordController,
-                                  error: 'Password non valida'
+                                  error: 'Password non valida',
+                                  icona: icona,
+                                  onPressed: hidePassword,
                               ),
                             ]
                           ),
@@ -168,16 +197,22 @@ class _LoginPageState extends State<LoginPage> {
 
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Padding(padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                          child: Text(
-                              'Hai dimenticato la password?',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Barlow',
+                          child: GestureDetector(
+                            onTap: () => {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => ForgotPage()))
+                            },
+                            child: Text(
+                                'Hai dimenticato la password?',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Barlow',
+                                ),
                               ),
-                            ),
+                          ),
                           ),
                         ],
                       ),

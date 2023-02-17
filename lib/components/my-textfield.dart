@@ -6,13 +6,18 @@ class MyTextField extends StatelessWidget {
   final String nome;
   final bool hide;
   final String error;
+  final IconData? icona;
+  final Function()? onPressed;
 
   const MyTextField({
     Key? key,
     required this.nome,
     required this.hide,
     required this.error,
-    required this.controller}) : super(key: key);
+    required this.controller,
+    this.icona,
+    this.onPressed
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +43,9 @@ class MyTextField extends StatelessWidget {
             fillColor: Colors.white,
             filled: true,
             hintText: nome,
+            suffixIcon: IconButton(
+                icon: Icon(icona),
+                onPressed: onPressed,),
           ),
         ),
       ),

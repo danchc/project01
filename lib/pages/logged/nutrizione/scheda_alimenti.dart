@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mcproject/components/my-scheda-alimento.dart';
 import 'package:mcproject/data/nutrizione_data.dart';
 import 'package:provider/provider.dart';
 
@@ -107,6 +108,9 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
     giornoController.clear();
   }
 
+  /* cancella alimento */
+  void cancellaAlimento() {}
+
   @override
   Widget build(BuildContext context) {
     return Consumer<NutrizioneData>(
@@ -132,21 +136,11 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
             ListView.builder(
               itemCount: value.getSchedaCorrente(widget.nomeScheda).alimenti.length,
               itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(value.getSchedaCorrente(widget.nomeScheda).alimenti[index].nome),
-                    subtitle:
-                    Row(
-                      children: [
-                        Text(
-                            value.getSchedaCorrente(widget.nomeScheda).alimenti[index].peso
-                        ),
-
-                        Text(
-                            value.getSchedaCorrente(widget.nomeScheda).alimenti[index].giorno
-                        ),
-                      ],
-                    ),
-                    contentPadding: const EdgeInsets.all(15),
+                  return MySchedaAlimento(
+                      nomeAlimento: value.getSchedaCorrente(widget.nomeScheda).alimenti[index].nome,
+                      peso: value.getSchedaCorrente(widget.nomeScheda).alimenti[index].peso,
+                      giornoDellaSettimana: value.getSchedaCorrente(widget.nomeScheda).alimenti[index].giorno,
+                      deleteFunction: (context) => cancellaAlimento
                   );
               },
             ),

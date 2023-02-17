@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/components/my-card.dart';
-import 'package:mcproject/pages/logged/scheda_allenamenti.dart';
+import 'package:mcproject/pages/logged/allenamenti/scheda_allenamenti.dart';
 import 'package:mcproject/pages/logged/home.dart';
 import 'package:mcproject/pages/logged/nutrizione/nutrizione.dart';
 import 'package:mcproject/pages/logged/options/profilo.dart';
