@@ -47,25 +47,25 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
             children: [
 
               Form(
-                key: _formKey,
-                child: Column(
+                  key: _formKey,
+                  child: Column(
                     children: [
                       Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: TextFormField(
-                        validator: (value) {
-                          if(value == null || value.isEmpty) {
-                            return '* Obbligatorio';
-                          }
-                      return null;
-                    },
-                    controller: nomeEsercizioController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Nome esercizio'
-                    ),
-                  ),
-                ),
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: TextFormField(
+                          validator: (value) {
+                            if(value == null || value.isEmpty) {
+                              return '* Obbligatorio';
+                            }
+                            return null;
+                          },
+                          controller: nomeEsercizioController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Nome esercizio'
+                          ),
+                        ),
+                      ),
 
                       //input numero sets
                       Padding(
@@ -117,8 +117,8 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
                             hintText: 'Peso (KG)'
                         ),
                       ),
-                  ],
-                )
+                    ],
+                  )
 
               )
               //input nome esercizio
@@ -135,8 +135,8 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
                 clipBehavior: Clip.antiAlias,
                 child: MaterialButton(
                     child: Text(
-                        'Salva',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      'Salva',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     onPressed: salvaEsercizio
                 ),
@@ -181,47 +181,47 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
   Widget build(BuildContext context) {
     return Consumer<AllenamentiData>(
       builder: (context, value, child) =>
-      Scaffold(
-        backgroundColor: Colors.grey[300],
-        appBar: AppBar(
-            centerTitle: true,
-            title: Text(widget.nomeSessione,
-            style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            leading: const BackButton(
-              color: Colors.black,
-            ),
+          Scaffold(
             backgroundColor: Colors.grey[300],
-            elevation: 0,
-          ),
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(widget.nomeSessione,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              leading: const BackButton(
+                color: Colors.black,
+              ),
+              backgroundColor: Colors.grey[300],
+              elevation: 0,
+            ),
 
-        body:
-          ListView.builder(
-            itemCount: value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi.length,
-            itemBuilder: (context, index) {
-              return MySessione(
-                nomeEsercizio:
+            body:
+            ListView.builder(
+              itemCount: value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi.length,
+              itemBuilder: (context, index) {
+                return MySessione(
+                  nomeEsercizio:
                   value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].nome,
-                sets:
+                  sets:
                   value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].sets,
-                reps:
+                  reps:
                   value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].reps,
-                peso:
+                  peso:
                   value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].peso,
-                deleteFunction: (context) => deleteEsercizio,
-              );
-            },
-          ),
+                  deleteFunction: (context) => deleteEsercizio,
+                );
+              },
+            ),
 
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: textColor,
-          onPressed: aggiungiEsercizio,
-          child: Icon(Icons.add),
-        ),
-      ),
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: textColor,
+              onPressed: aggiungiEsercizio,
+              child: Icon(Icons.add),
+            ),
+          ),
     );
   }
 }

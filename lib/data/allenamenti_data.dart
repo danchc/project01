@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:mcproject/model/esercizio.dart';
 import 'package:mcproject/model/sessione.dart';
 import 'package:mcproject/model/workout.dart';
@@ -9,17 +10,44 @@ import 'package:mcproject/model/workout.dart';
 
 class AllenamentiData extends ChangeNotifier{
 
+  /* hive box */
+  final _box = Hive.box('workact_box');
+
   /* default */
-  List<Workout> listaSchede = [];
+  List<Workout> listaSchede = [Workout(
+  nome: 'Scheda allenamento',
+  sessioni: [Sessione(nome: 'Sessione uno',
+  esercizi: [Esercizio(nome: 'Esercizio uno', reps: '12', sets: '3', peso: '10')])])];
 
   /* metodo per recuperare listaSchede */
   List<Workout> getListaSchede() {
     return listaSchede;
   }
 
+  /* crea i dati di default*/
+  void createInitialData() {
+    listaSchede = [ Workout(
+      nome: 'Scheda allenamento',
+      sessioni: [Sessione(nome: 'Sessione uno',
+          esercizi: [Esercizio(nome: 'Esercizio uno', reps: '12', sets: '3', peso: '10')])]
+      ),
+    ];
+  }
+
+  /* recupera i dati dal database */
+  void loadData() {
+    listaSchede = _box.get("ALLENAMENTI");
+  }
+
+  /* aggiorniamo i dati del database */
+  void updateDatabase() {
+    _box.put("ALLENAMENTI", listaSchede);
+  }
+
   /* metodo per aggiungere nuova scheda */
   void addScheda(String nome) {
     listaSchede.add(Workout(nome: nome, sessioni: []));
+    updateDatabase();
     notifyListeners();
   }
 

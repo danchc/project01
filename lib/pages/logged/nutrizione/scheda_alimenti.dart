@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mcproject/components/my-scheda-alimento.dart';
 import 'package:mcproject/data/nutrizione_data.dart';
@@ -35,66 +36,66 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
         builder: (context) => AlertDialog(
           title: Text('Aggiungi alimento'),
           content:
-            Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: TextFormField(
-                      validator: (value) {
-                        if(value == null || value.isEmpty) {
-                          return '* Obbligatorio';
-                        }
-                        return null;
-                      },
-                      controller: nomeAlimentoController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Nome alimento'
-                      ),
+          Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  child: TextFormField(
+                    validator: (value) {
+                      if(value == null || value.isEmpty) {
+                        return '* Obbligatorio';
+                      }
+                      return null;
+                    },
+                    controller: nomeAlimentoController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Nome alimento'
                     ),
                   ),
+                ),
 
-                  //input peso
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: TextFormField(
-                      validator: (value) {
-                        if(value == null || value.isEmpty) {
-                          return '* Obbligatorio';
-                        }
-                        return null;
-                      },
-                      controller: pesoController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Peso (gr)'
-                      ),
+                //input peso
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  child: TextFormField(
+                    validator: (value) {
+                      if(value == null || value.isEmpty) {
+                        return '* Obbligatorio';
+                      }
+                      return null;
+                    },
+                    controller: pesoController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Peso (gr)'
                     ),
                   ),
+                ),
 
-                  //input peso
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: TextFormField(
-                      validator: (value) {
-                        if(value == null || value.isEmpty) {
-                          return '* Obbligatorio';
-                        }
-                        return null;
-                      },
-                      controller: giornoController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Giorno della settimana'
-                      ),
+                //input peso
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  child: TextFormField(
+                    validator: (value) {
+                      if(value == null || value.isEmpty) {
+                        return '* Obbligatorio';
+                      }
+                      return null;
+                    },
+                    controller: giornoController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Giorno della settimana'
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
 
           actions: [
             Center(
@@ -104,7 +105,11 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
                 elevation: 18.0,
                 clipBehavior: Clip.antiAlias,
                 child: MaterialButton(
-                    onPressed: salvaNuovoAlimento,
+                    onPressed: () => salvaNuovoAlimento(
+                      nome: nomeAlimentoController.text,
+                      peso: pesoController.text,
+                      giorno: giornoController.text
+                    ),
                     child: const Text(
                       'Salva',
                       style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -117,19 +122,39 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
   }
 
   /* salva nuovo alimento */
-  void salvaNuovoAlimento() {
+  Future<void> salvaNuovoAlimento({
+    required String nome,
+    required String peso,
+    required String giorno,
+    }) async {
     if(_formKey.currentState!.validate()){
-      Provider.of<NutrizioneData>(context, listen:false).
-      addNuovoAlimento(
-        widget.nomeScheda,
-        nomeAlimentoController.text,
-        pesoController.text,
-        giornoController.text,
-      );
+
+      DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('nutrizione').doc(widget.nomeScheda).collection('alimento').doc(nome);
+
+      Map<String, dynamic> data = <String, dynamic>{
+        "id": nome,
+        "nome": nome,
+        "peso": peso,
+        "giorno": giorno
+      };
+
+      await documentReference
+          .set(data)
+          .whenComplete(() => print("Alimento ${nome} inserito.")).catchError((e) => print(e)); //log
+
       Navigator.pop(context);
       clear();
     }
+  }
 
+  Stream<QuerySnapshot> readItems() {
+    CollectionReference collectionReference =
+        FirebaseFirestore.instance
+            .collection('nutrizione').doc(widget.nomeScheda)
+            .collection('alimento');
+
+    return collectionReference.snapshots();
   }
 
   void clear() {
@@ -163,16 +188,37 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
             ),
 
             body:
-            ListView.builder(
-              itemCount: value.getSchedaCorrente(widget.nomeScheda).alimenti.length,
-              itemBuilder: (context, index) {
-                  return MySchedaAlimento(
-                      nomeAlimento: value.getSchedaCorrente(widget.nomeScheda).alimenti[index].nome,
-                      peso: value.getSchedaCorrente(widget.nomeScheda).alimenti[index].peso,
-                      giornoDellaSettimana: value.getSchedaCorrente(widget.nomeScheda).alimenti[index].giorno,
-                      deleteFunction: (context) => cancellaAlimento
+            StreamBuilder<QuerySnapshot>(
+              stream: readItems(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error');
+                } else if(snapshot.hasData || snapshot.data != null){
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+
+                      /* variabili */
+                      var obj = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                      String nome = obj['nome'];
+                      String peso = obj['peso'];
+                      String giorno = obj['giorno'];
+
+                      return MySchedaAlimento(
+                          nomeAlimento: nome,
+                          peso: peso,
+                          giornoDellaSettimana: giorno,
+                          deleteFunction: (context) => cancellaAlimento
+                      );
+                    },
                   );
-              },
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }
+
             ),
 
             floatingActionButton: FloatingActionButton(

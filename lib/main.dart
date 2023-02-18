@@ -8,11 +8,14 @@ import 'package:mcproject/pages/login_page.dart';
 import 'package:mcproject/pages/register_page.dart';
 import 'package:provider/provider.dart';
 import 'data/workout_data.dart';
+import 'model/workout.dart';
 import 'pages/welcome_page.dart';
 import 'pages/logged/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 
 void main() async{
@@ -20,6 +23,14 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  /* inizializziamo il db */
+  await Hive.initFlutter();
+
+  // await Hive.deleteBoxFromDisk('workact_box');
+  /* diamo un nome al box principale */
+  await Hive.openBox('workact_box');
+
 
   /* blocchiamo il landscape */
   SystemChrome.setPreferredOrientations(

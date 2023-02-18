@@ -1,30 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mcproject/model/alimento.dart';
 
-import '../model/nutrizione.dart';
+import '../model/alimentazione.dart';
 
 /**
- * Operazioni base per gestire un elemento Nutrizione
+ * Operazioni base per gestire un elemento Alimentazione
  */
 
 class NutrizioneData extends ChangeNotifier {
 
   /* lista default */
-  List<Nutrizione> listaSchedeNutrizione = [];
+  List<Alimentazione> listaSchedeNutrizione = [];
 
   /* get lista di schede */
-  List<Nutrizione> getSchedeNutrizioni() {
+  List<Alimentazione> getSchedeNutrizioni() {
     return listaSchedeNutrizione;
   }
 
   /* get scheda corrente */
-  Nutrizione getSchedaCorrente(String nome) {
+  Alimentazione getSchedaCorrente(String nome) {
     return listaSchedeNutrizione.firstWhere((scheda) => scheda.nome == nome);
   }
 
   /* add nuova scheda */
   void addSchedaNutrizione(String nome) {
-    listaSchedeNutrizione.add(Nutrizione(nome: nome, alimenti: []));
+    listaSchedeNutrizione.add(Alimentazione(nome: nome, alimenti: []));
     notifyListeners();
   }
 
@@ -32,7 +32,7 @@ class NutrizioneData extends ChangeNotifier {
   void addNuovoAlimento(String nomeScheda, String nomeAlimento, String peso, String giorno) {
 
     /* prendo la scheda corrente */
-    Nutrizione corrente = getSchedaCorrente(nomeScheda);
+    Alimentazione corrente = getSchedaCorrente(nomeScheda);
 
     /* aggiungo alimento alla lista nella scheda corrente */
 
@@ -47,7 +47,7 @@ class NutrizioneData extends ChangeNotifier {
   int numeroAlimentiScheda(String nomeScheda) {
 
     /* prendo la scheda corrente */
-    Nutrizione corrente = getSchedaCorrente(nomeScheda);
+    Alimentazione corrente = getSchedaCorrente(nomeScheda);
 
     return corrente.alimenti.length;
   }
