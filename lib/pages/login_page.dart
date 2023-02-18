@@ -110,6 +110,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  /* metodo hide password */
   void hidePassword() {
     setState(() {
       if(hide) {
@@ -120,7 +121,6 @@ class _LoginPageState extends State<LoginPage> {
         icona = LineIcons.eye;
       }
     });
-
   }
 
 

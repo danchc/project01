@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:mcproject/pages/login_page.dart';
@@ -29,6 +30,31 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
 
   bool isVerified = false;
+
+  /* altre variabili */
+  bool hide = true;
+  IconData icona = LineIcons.eye;
+
+
+  /* metodo hide password */
+  void hidePassword() {
+    setState(() {
+      if(hide) {
+        hide = false;
+        icona = LineIcons.eyeSlash;
+      } else {
+        hide = true;
+        icona = LineIcons.eye;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    hide = true;
+    icona = LineIcons.eye;
+    super.initState();
+  }
 
   void signUserUp() async {
 
@@ -233,14 +259,18 @@ class _RegisterPageState extends State<RegisterPage> {
                               const SizedBox(height: 20,),
                               MyTextField(
                                   nome: 'Inserisci la tua password',
-                                  hide: true,
+                                  hide: hide,
+                                  icona: icona,
+                                  onPressed: hidePassword,
                                   controller: passwordController,
                                   error: 'Password non valida'
                               ),
                               const SizedBox(height: 20,),
                               MyTextField(
                                   nome: 'Conferma la tua password',
-                                  hide: true,
+                                  hide: hide,
+                                  icona: icona,
+                                  onPressed: hidePassword,
                                   controller: passwordConfirmController,
                                   error: 'Password non valida'
                               ),

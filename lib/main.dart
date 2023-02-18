@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mcproject/data/allenamenti_data.dart';
 import 'package:mcproject/data/nutrizione_data.dart';
 import 'package:mcproject/pages/auth_page.dart';
+import 'package:mcproject/pages/introduction_page.dart';
 import 'package:mcproject/pages/logged/home.dart';
 import 'package:mcproject/pages/login_page.dart';
 import 'package:mcproject/pages/register_page.dart';
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: AuthPage(),
+        home: IntroPage(),
         routes: {
           '/login' : (context) =>  LoginPage(),
           '/register' : (context) =>  RegisterPage(),

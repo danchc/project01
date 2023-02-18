@@ -51,6 +51,7 @@ dependencies:
   material_dialogs: ^1.1.4
   lottie: ^2.2.0
   url_launcher: ^6.1.9
+  introduction_screen: ^3.1.6
 
 
 dev_dependencies:
@@ -100,6 +101,10 @@ flutter:
       fonts:
       - asset: assets/fonts/Gwendolyn-Regular.ttf
       - asset: assets/fonts/Gwendolyn-Bold.ttf
+    - family: Raleway
+      fonts:
+      - asset: assets/fonts/Raleway-Italic-VariableFont_wght.ttf
+      - asset: assets/fonts/Raleway-VariableFont_wght.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
