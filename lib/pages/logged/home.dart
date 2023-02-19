@@ -169,18 +169,14 @@ class _PrincipaleState extends State<Principale> {
                           ],
                         ),
 
+                        /* riquadro foto */
                         Container(
                           width: 80,
                           alignment: Alignment.center,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.white,
-                          ),
-                          child: Text(
-                            user.displayName![0].toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 40,
-                            ),
+                            image: DecorationImage(image: NetworkImage(user.photoURL!)),
                           ),
                         ),
 

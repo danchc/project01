@@ -66,8 +66,8 @@ class _AccountDetailsState extends State<AccountDetails> {
     final image = await ImagePicker()
         .pickImage(
           source: ImageSource.gallery,
-          maxWidth: 512,
-          maxHeight: 512,
+          maxWidth: 1024,
+          maxHeight: 1024,
           imageQuality: 75
         );
 
@@ -75,6 +75,9 @@ class _AccountDetailsState extends State<AccountDetails> {
     await ref.putFile(File(image!.path));
     ref.getDownloadURL().then((value) {
       print(value);
+      setState(() {
+        photoURL = value;
+      });
     });
   }
 

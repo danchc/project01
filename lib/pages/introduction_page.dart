@@ -104,7 +104,7 @@ class _IntroPageState extends State<IntroPage> {
           clipBehavior: Clip.antiAlias,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-            child: Text('Next',
+            child: Text('Avanti',
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
