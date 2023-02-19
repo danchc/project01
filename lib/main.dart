@@ -18,19 +18,13 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 
-void main() async{
+int? initScreen = 0;
+
+Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  /* inizializziamo il db */
-  await Hive.initFlutter();
-
-  // await Hive.deleteBoxFromDisk('workact_box');
-  /* diamo un nome al box principale */
-  await Hive.openBox('workact_box');
-
 
   /* blocchiamo il landscape */
   SystemChrome.setPreferredOrientations(

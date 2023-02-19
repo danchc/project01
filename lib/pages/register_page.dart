@@ -83,16 +83,11 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             actions: [
               IconsButton(
-                onPressed: () {Navigator.pop(context);},
+                onPressed: () {Navigator.pop(context);
+                Navigator.pop(context);
+                clear();
+                },
                 text: 'Ricevuto',
-                iconData: Icons.done,
-                color: Colors.blue,
-                textStyle: TextStyle(color: Colors.white),
-                iconColor: Colors.white,
-              ),
-              IconsButton(
-                onPressed: () {sendVerificationEmail();},
-                text: 'Rimanda',
                 iconData: Icons.done,
                 color: Colors.blue,
                 textStyle: TextStyle(color: Colors.white),
@@ -122,6 +117,13 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
 
+  }
+
+  void clear() {
+    usernameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    passwordConfirmController.clear();
   }
 
   /* metodo per invio della e-mail di verifica */

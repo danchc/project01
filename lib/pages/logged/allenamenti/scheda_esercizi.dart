@@ -84,6 +84,7 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
                             }
                             return null;
                           },
+                          keyboardType: TextInputType.number,
                           controller: numeroSetsController,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
@@ -102,6 +103,7 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
                             }
                             return null;
                           },
+                          keyboardType: TextInputType.number,
                           controller: numeroRepsController,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
@@ -118,6 +120,7 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
                           }
                           return null;
                         },
+                        keyboardType: TextInputType.number,
                         controller: pesoController,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),

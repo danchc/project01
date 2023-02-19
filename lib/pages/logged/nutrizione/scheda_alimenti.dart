@@ -46,6 +46,7 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                //input nome
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: TextFormField(
@@ -73,6 +74,7 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
                       }
                       return null;
                     },
+                    keyboardType: TextInputType.number,
                     controller: pesoController,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -81,7 +83,7 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
                   ),
                 ),
 
-                //input peso
+                //input giorno settimana
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: TextFormField(

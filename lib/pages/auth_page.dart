@@ -6,6 +6,7 @@ import 'package:mcproject/pages/introduction_page.dart';
 import 'package:mcproject/pages/logged/home_page.dart';
 import 'package:mcproject/pages/login_page.dart';
 import 'package:mcproject/pages/welcome_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});

@@ -176,10 +176,12 @@ class _PrincipaleState extends State<Principale> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.white,
-                            image: DecorationImage(image: NetworkImage(user.photoURL!)),
+                            image: DecorationImage(image: user.photoURL != null
+                                ? NetworkImage(user.photoURL!)
+                                : NetworkImage('https://via.placeholder.com/510x510?text=No+photo'),
+                            ),
                           ),
                         ),
-
 
                       ],
                     ),
