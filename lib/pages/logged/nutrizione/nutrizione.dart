@@ -424,7 +424,27 @@ class _NutrizioneState extends State<Nutrizione> {
                                     );
                                   }
                               );
-                            } else {
+                            } else if(snapshot.hasData && snapshot.data!.docs.length == 0) { //se non ci sono elementi
+                              return Container(
+                                margin: const EdgeInsets.only(top: 80),
+                                child: Center(
+                                  child: Column(
+                                    children: [
+                                      SvgPicture.asset('assets/images/void1.svg',height: 170,),
+
+                                      const Text(
+                                        'Sembra non ci sia niente',
+                                        style: TextStyle(
+                                            fontFamily: 'Barlow',
+                                            fontSize: 18
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+                            else {
                               return Center(
                                 child: CircularProgressIndicator(),
                               );

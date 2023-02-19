@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mcproject/components/my-session.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/data/allenamenti_data.dart';
@@ -138,7 +142,11 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
                       'Salva',
                       style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    onPressed: salvaEsercizio
+                    onPressed: () => salvaNuovoEsercizio(
+                        nome: nomeEsercizioController.text,
+                        reps: numeroRepsController.text,
+                        sets: numeroSetsController.text,
+                        peso: pesoController.text)
                 ),
               ),
             ),
@@ -147,21 +155,46 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
 
   }
 
-  /* metodo per salvare esercizio */
-  void salvaEsercizio() {
-    String nomeEsercizio = nomeEsercizioController.text;
-    String numeroSets = numeroSetsController.text;
-    String numeroReps = numeroRepsController.text;
-    String peso = pesoController.text;
+  /* salva nuovo alimento */
+  Future<void> salvaNuovoEsercizio({
+    required String nome,
+    required String reps,
+    required String sets,
+    required String peso
+  }) async {
+    if(_formKey.currentState!.validate()){
 
-    if(_formKey.currentState!.validate()) {
-      Provider.of
-      <AllenamentiData>(context, listen:false)
-          .addEsercizio(widget.nomeScheda, widget.nomeSessione, nomeEsercizio, numeroSets, numeroReps, peso);
+      DocumentReference documentReference =
+      FirebaseFirestore.instance
+          .collection('workout').doc(widget.nomeScheda)
+          .collection('sessioni').doc(widget.nomeSessione)
+          .collection('esercizi').doc(nome);
+
+      Map<String, dynamic> data = <String, dynamic>{
+        "id": nome,
+        "nome": nome,
+        "reps": reps,
+        "sets": sets,
+        "peso": peso
+      };
+
+      await documentReference
+          .set(data)
+          .whenComplete(() => print("Esercizio ${nome} inserito.")).catchError((e) => print(e)); //log
 
       Navigator.pop(context);
       clear();
     }
+  }
+
+  Stream<QuerySnapshot> readItems() {
+    CollectionReference collectionReference =
+    FirebaseFirestore.instance
+        .collection('workout').doc(widget.nomeScheda)
+        .collection('sessioni').doc(widget.nomeSessione)
+        .collection('esercizi');
+
+    return collectionReference.snapshots();
   }
 
   //elimina esercizio
@@ -199,21 +232,65 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
             ),
 
             body:
-            ListView.builder(
-              itemCount: value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi.length,
-              itemBuilder: (context, index) {
-                return MySessione(
-                  nomeEsercizio:
-                  value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].nome,
-                  sets:
-                  value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].sets,
-                  reps:
-                  value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].reps,
-                  peso:
-                  value.getSessioneCorrente(widget.nomeScheda, widget.nomeSessione).esercizi[index].peso,
-                  deleteFunction: (context) => deleteEsercizio,
-                );
-              },
+            StreamBuilder<QuerySnapshot>(
+              stream: readItems(),
+              builder: (context, snapshot) {
+
+                if (snapshot.hasError) {
+                  return Text('Error');
+                } else if(snapshot.hasData || snapshot.data != null){
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      /* variabili */
+                      var obj = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                      String nome = obj['nome'];
+                      String reps = obj['reps'];
+                      String sets = obj['sets'];
+                      String peso = obj['peso'];
+
+
+                      return MySessione(
+                        nomeEsercizio: nome,
+                        sets: sets,
+                        reps: reps,
+                        peso: peso,
+                        deleteFunction: (context) => deleteEsercizio,
+                      );
+                    },
+                  );
+
+                } else if(snapshot.hasData && snapshot.data!.docs.length == 0) {
+                  //se non ci sono elementi
+                  return Container(
+                    margin: const EdgeInsets.only(top: 80),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          SvgPicture.asset('assets/images/void.svg',height: 170,),
+
+                          const Text(
+                            'Sembra non ci sia niente',
+                            style: TextStyle(
+                                fontFamily: 'Barlow',
+                                fontSize: 18
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                else {
+
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }
             ),
 
             floatingActionButton: FloatingActionButton(

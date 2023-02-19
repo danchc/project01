@@ -10,8 +10,6 @@ import 'package:mcproject/model/workout.dart';
 
 class AllenamentiData extends ChangeNotifier{
 
-  /* hive box */
-  final _box = Hive.box('workact_box');
 
   /* default */
   List<Workout> listaSchede = [Workout(
@@ -33,21 +31,9 @@ class AllenamentiData extends ChangeNotifier{
       ),
     ];
   }
-
-  /* recupera i dati dal database */
-  void loadData() {
-    listaSchede = _box.get("ALLENAMENTI");
-  }
-
-  /* aggiorniamo i dati del database */
-  void updateDatabase() {
-    _box.put("ALLENAMENTI", listaSchede);
-  }
-
   /* metodo per aggiungere nuova scheda */
   void addScheda(String nome) {
     listaSchede.add(Workout(nome: nome, sessioni: []));
-    updateDatabase();
     notifyListeners();
   }
 

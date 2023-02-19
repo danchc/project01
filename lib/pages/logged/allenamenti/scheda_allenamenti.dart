@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mcproject/components/my-schedaallenamento.dart';
@@ -31,48 +33,9 @@ class _AllenamentiState extends State<Allenamenti> {
   /* key form */
   final _formKey = GlobalKey<FormState>();
 
-  /* hive box */
-  final _box = Hive.box('workact_box');
-
-
   @override
   void initState() {
-    /* se è la prima volta che accedi all'applicazione */
-    if (_box.get("ALLENAMENTI") == null) {
-      AllenamentiData().createInitialData();
-    }
-    /* altrimenti carica i dati */
-    else {
-      AllenamentiData().loadData();
-    }
     super.initState();
-  }
-
-
-
-  /*
-  //salva nuova scheda
-  void saveNuovaScheda() {
-    setState(() {
-      schedeAllenamento.add(_controller.text);
-    });
-    Navigator.of(context).pop();
-    _numController.clear();
-  }*/
-
-  void saveNuovaScheda() async{
-    if(_formKey.currentState!.validate()) {
-      Provider.of<AllenamentiData>(context, listen: false).addScheda(_controller.text);
-      await saveScheda({
-        'nome': _controller.text,
-        'sessioni': []
-      });
-      Navigator.pop(context);
-    }
-  }
-
-  Future<void> saveScheda(Map<String, dynamic> nuovaScheda) async {
-    await _box.add(nuovaScheda);
   }
 
   //funzione che riporta alla scheda per aggiungere scheda
@@ -101,7 +64,7 @@ class _AllenamentiState extends State<Allenamenti> {
                 elevation: 18.0,
                 clipBehavior: Clip.antiAlias,
                 child: MaterialButton(
-                  onPressed: saveNuovaScheda,
+                  onPressed: () => salvaNuovoWorkout(nome: _controller.text),
                   child: const Text(
                     'Salva',
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -113,6 +76,48 @@ class _AllenamentiState extends State<Allenamenti> {
         ));
 
     _controller.clear();
+  }
+
+  /* salva nuovo alimento */
+  Future<void> salvaNuovoWorkout({
+    required String nome,
+  }) async {
+    if(_formKey.currentState!.validate()){
+
+      DocumentReference documentReference =
+      FirebaseFirestore.instance.collection('workout').doc(_controller.text);
+
+      Map<String, dynamic> data = <String, dynamic>{
+        "id": nome,
+        "nome": nome,
+        "sessioni": [],
+      };
+
+      await documentReference
+          .set(data)
+          .whenComplete(() => print("Workout ${nome} inserito.")).catchError((e) => print(e)); //log
+
+      Navigator.pop(context);
+      _controller.clear();
+    }
+  }
+
+  Stream<QuerySnapshot> readItems() {
+    CollectionReference collectionReference =
+    FirebaseFirestore.instance
+        .collection('workout');
+
+    return collectionReference.snapshots();
+  }
+
+  bool test = true;
+
+  void readInt() async {
+    var mainCollection = await FirebaseFirestore.instance.collection('workout').get();
+    final int count = mainCollection.size;
+    if(count.isGreaterThan(0)){
+      test = false;
+    }
   }
 
   //funzione per eliminare scheda
@@ -201,6 +206,7 @@ class _AllenamentiState extends State<Allenamenti> {
                       ),
                     ),
 
+                    /*
                     if(value.listaSchede.isEmpty) ... [
                       Container(
                         margin: const EdgeInsets.only(top: 80),
@@ -245,7 +251,49 @@ class _AllenamentiState extends State<Allenamenti> {
                             );
                           }
                       ),
-                    ],
+                    ],*/
+
+                    StreamBuilder<QuerySnapshot>(
+                        stream: readItems(),
+                        builder: (context, snapshot) {
+
+                          if (snapshot.hasError) {
+                            return Text('Error');
+                          } else if(snapshot.hasData || snapshot.data != null){
+                            return ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data!.docs.length,
+                                itemBuilder: (context,index) {
+
+                                  var obj = snapshot.data!.docs[index].data() as Map<String,dynamic>;
+                                  String nome = obj['nome'];
+
+                                  // singola scheda
+                                  return GestureDetector(
+                                    onTap: () => {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => SchedaAllenamento(nomeScheda: nome)))
+                                    },
+                                    child: MySchedaAllenamento(
+                                      nomeScheda: nome,
+                                      icona: LineIcons.dumbbell,
+                                      deleteFunction: (context) => deleteScheda(index),
+                                    ),
+                                  );
+                                }
+                            );
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                        }
+                    ),
+
+
 
                   ]
               ),
