@@ -60,28 +60,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if(_formKey.currentState!.validate()){
       try {
-        Dialogs.bottomMaterialDialog(
-          context: context,
-          color: Colors.white,
-          msg: 'Controlla la tua e-mail!',
-          title: 'E-mail di verifica inviata',
-          lottieBuilder: Lottie.asset(
-            'assets/animations/lottie1.json',
-            fit: BoxFit.contain,
-          ),
-          actions: [
-            IconsButton(
-              onPressed: () {Navigator.pop(context);},
-              text: 'Ricevuto',
-              iconData: Icons.done,
-              color: Colors.blue,
-              textStyle: TextStyle(color: Colors.white),
-              iconColor: Colors.white,
-            ),
-          ]
-      );
-      //provo a creare l'utente
-
         //controlliamo se le password corrispondono
         if(passwordController.text == passwordConfirmController.text) {
 
@@ -93,6 +71,35 @@ class _RegisterPageState extends State<RegisterPage> {
         if(FirebaseAuth.instance.currentUser?.emailVerified == false && FirebaseAuth.instance.currentUser != null) {
             sendVerificationEmail();
           }
+
+        Dialogs.bottomMaterialDialog(
+            context: context,
+            color: Colors.white,
+            msg: 'Controlla la tua e-mail!',
+            title: 'E-mail di verifica inviata',
+            lottieBuilder: Lottie.asset(
+              'assets/animations/lottie1.json',
+              fit: BoxFit.contain,
+            ),
+            actions: [
+              IconsButton(
+                onPressed: () {Navigator.pop(context);},
+                text: 'Ricevuto',
+                iconData: Icons.done,
+                color: Colors.blue,
+                textStyle: TextStyle(color: Colors.white),
+                iconColor: Colors.white,
+              ),
+              IconsButton(
+                onPressed: () {sendVerificationEmail();},
+                text: 'Rimanda',
+                iconData: Icons.done,
+                color: Colors.blue,
+                textStyle: TextStyle(color: Colors.white),
+                iconColor: Colors.white,
+              ),
+            ]
+        );
 
         }
         else {

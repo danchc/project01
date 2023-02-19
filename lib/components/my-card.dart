@@ -18,6 +18,14 @@ class MyCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: colore,
           borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+                BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 8,
+                offset: Offset(4, 8), // changes position of shadow
+              ),
+            ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(25.0),

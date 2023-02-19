@@ -2,6 +2,10 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:lottie/lottie.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:mcproject/components/my-readonly-textfield.dart';
 
 class AccountDetails extends StatefulWidget {
@@ -24,13 +28,93 @@ class _AccountDetailsState extends State<AccountDetails> {
   /* informazioni utente */
   final user = FirebaseAuth.instance.currentUser!;
 
+  /* key form */
+  final _formKey = GlobalKey<FormState>();
+
   final String photoURL = 'assets/images/mainicon.png';
 
   /* altre variabili */
   final bool readOnly = true;
+  bool hide = true;
+  IconData icona = LineIcons.eye;
+
+  @override
+  void initState() {
+    hide = true;
+    icona = LineIcons.eye;
+    super.initState();
+  }
+
+  /* metodo hide password */
+  void hidePassword() {
+    setState(() {
+      if(hide) {
+        hide = false;
+        icona = LineIcons.eyeSlash;
+      } else {
+        hide = true;
+        icona = LineIcons.eye;
+      }
+    });
+  }
 
   /* metodo per aggiornare password */
-  void aggiornaPassword() {}
+  void aggiornaPassword() async{
+
+    /* verifichiamo che non ci siano errori */
+    if (_formKey.currentState!.validate()) {
+      /* se le password corrispondono */
+      if(passwordController.text == passwordConfirmController) {
+        /* aggiorniamo i dati */
+        await user.updatePassword(passwordController.text);
+        Navigator.pop(context);
+
+        Dialogs.bottomMaterialDialog(
+            context: context,
+            color: Colors.white,
+            msg: 'La password è stata aggiornata',
+            title: 'Grande!',
+            lottieBuilder: Lottie.asset(
+              'assets/animations/done.json',
+              fit: BoxFit.contain,
+            ),
+            actions: [
+              IconsButton(
+                onPressed: () {Navigator.pop(context);},
+                text: 'Ricevuto',
+                iconData: Icons.done,
+                color: Colors.green,
+                textStyle: TextStyle(color: Colors.white),
+                iconColor: Colors.white,
+              ),
+            ]
+        );
+
+      } else {
+        Navigator.pop(context);
+        Dialogs.bottomMaterialDialog(
+            context: context,
+            color: Colors.white,
+            msg: 'Le password non corrispondono',
+            title: 'Errore!',
+            lottieBuilder: Lottie.asset(
+              'assets/animations/lottierr.json',
+              fit: BoxFit.contain,
+            ),
+            actions: [
+              IconsButton(
+                onPressed: () {Navigator.pop(context);},
+                text: 'Riprova',
+                iconData: Icons.error_outline_sharp,
+                color: Colors.red,
+                textStyle: TextStyle(color: Colors.white),
+                iconColor: Colors.white,
+              ),
+            ]
+        );
+      }
+    }
+  }
 
 
   @override
@@ -180,37 +264,60 @@ class _AccountDetailsState extends State<AccountDetails> {
 
                                 title: Text('Aggiorna password'),
 
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    //input nome esercizio
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 5.0),
-                                      child: TextField(
-                                        controller: passwordController,
-                                        decoration: const InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            hintText: 'Password'
-                                        ),
-                                        obscureText: true,
-                                        obscuringCharacter: '*',
-                                      ),
-                                    ),
+                                content: Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
 
-                                    //input numero sets
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 5.0),
-                                      child: TextField(
-                                        controller: passwordConfirmController,
-                                        decoration: const InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            hintText: 'Conferma Password'
+
+                                      //input password
+                                      Padding(
+                                        padding: const EdgeInsets.only(bottom: 5.0),
+                                        child: TextFormField(
+                                          validator: (value) {
+                                            if(value == null || value.isEmpty) {
+                                              return '*Obbligatorio';
+                                            }
+                                            return null;
+                                          },
+                                          controller: passwordController,
+                                          decoration: InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              hintText: 'Password',
+                                              suffixIcon: IconButton(
+                                                icon: Icon(icona),
+                                                onPressed: hidePassword,
+                                              ),
+                                          ),
+                                          obscureText: hide,
                                         ),
-                                        obscureText: true,
-                                        obscuringCharacter: '*',
                                       ),
-                                    ),
-                                  ],
+
+                                      //input password conferma
+                                      Padding(
+                                        padding: const EdgeInsets.only(bottom: 5.0),
+                                        child: TextFormField(
+                                          validator: (value) {
+                                            if(value == null || value.isEmpty) {
+                                              return '*Obbligatorio';
+                                            }
+                                            return null;
+                                          },
+                                          controller: passwordConfirmController,
+                                          decoration: InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              hintText: 'Conferma Password',
+                                              suffixIcon: IconButton(
+                                                  icon: Icon(icona),
+                                                  onPressed: hidePassword,
+                                              ),
+                                          ),
+                                          obscureText: hide,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
 
                                 actions: [

@@ -5,6 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icon.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/components/my-card.dart';
 import 'package:mcproject/data/allenamenti_data.dart';
@@ -66,35 +68,75 @@ class _PrincipaleState extends State<Principale> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.blueAccent,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 8,
+                          offset: Offset(4, 8), // changes position of shadow
+                        ),
+                      ],
                     ),
                     height: 150,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-
                         /* frase saluto */
-                        Container(
-                          alignment: Alignment.center,
-                          child: ora < 13?
-                          const Text(
-                            'Buongiorno!',
-                            style: TextStyle(
-                              fontFamily: 'Barlow',
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ):
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              alignment: Alignment.center,
+                              child: ora < 13 && ora > 5?
+                              Row(
+                                children: [
+                                  Icon(
+                                      Icons.waving_hand_outlined,
+                                  color: Colors.white,
+                                  size: 35,),
+                                  const Text(
+                                    ' Buongiorno,',
+                                    style: TextStyle(
+                                      fontFamily: 'Barlow',
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ):
 
-                          const Text(
-                            'Buonasera!',
-                            style: TextStyle(
-                              fontFamily: 'Barlow',
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.waving_hand_outlined,
+                                    color: Colors.white,
+                                    size: 35,),
+                                  const Text(
+                                    'Buonasera,',
+                                    style: TextStyle(
+                                      fontFamily: 'Barlow',
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                            Container(
+                              child: Text(
+                                '${user.displayName}',
+                                style: TextStyle(
+                                  fontFamily: 'Raleway',
+                                  fontSize: 29,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
 
                         Container(
