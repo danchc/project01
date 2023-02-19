@@ -218,6 +218,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:lottie/lottie.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/data/nutrizione_data.dart';
 import 'package:mcproject/pages/logged/nutrizione/scheda_alimenti.dart';
@@ -282,9 +285,17 @@ class _NutrizioneState extends State<Nutrizione> {
     schedaNutrizioneController.clear();
   }
 
-  /* delete scheda */
-  void deleteScheda(int index) {}
+  //funzione per eliminare scheda
+  static Future<void> deleteScheda({
+    required String docId,
+  }) async {
+    DocumentReference documentReference =
+    FirebaseFirestore.instance.collection('nutrizione').doc(docId);
 
+    await documentReference
+        .delete().whenComplete(() => print('Nutrizione ${docId} eliminato con successo.')).catchError((e) => print(e));
+
+  }
   /* save scheda */
   Future<void> saveScheda({
     required String nome
@@ -307,11 +318,38 @@ class _NutrizioneState extends State<Nutrizione> {
 
   }
 
+  /* metodo per leggere i dati */
   Stream<QuerySnapshot> readItems() {
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection('nutrizione');
 
     return collectionReference.snapshots();
+  }
+
+  void warningMessage(String docId) {
+    Dialogs.bottomMaterialDialog(
+        context: context,
+        color: Colors.white,
+        msg: 'Sei sicuro di voler eliminare questo elemento?',
+        title: 'Attenzione!',
+        lottieBuilder: Lottie.asset(
+          'assets/animations/warning.json',
+          fit: BoxFit.contain,
+        ),
+        actions: [
+          IconsButton(
+            onPressed: () {
+              deleteScheda(docId: docId);
+              Navigator.pop(context);
+            },
+            text: 'Sono sicuro',
+            iconData: Icons.error_outline_sharp,
+            color: Colors.yellow,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]
+    );
   }
 
   @override
@@ -419,7 +457,9 @@ class _NutrizioneState extends State<Nutrizione> {
                                       child: MySchedaAllenamento(
                                         nomeScheda: nome,
                                         icona: LineIcons.beer,
-                                        deleteFunction: (context) => deleteScheda(index),
+                                        deleteFunction: (context) async {
+                                            warningMessage(nome);
+                                        }
                                       ),
                                     );
                                   }

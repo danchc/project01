@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:mcproject/components/my-session.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/data/allenamenti_data.dart';
@@ -187,6 +190,32 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
     }
   }
 
+  void warningMessage(String docId) {
+    Dialogs.bottomMaterialDialog(
+        context: context,
+        color: Colors.white,
+        msg: 'Sei sicuro di voler eliminare questo elemento?',
+        title: 'Attenzione!',
+        lottieBuilder: Lottie.asset(
+          'assets/animations/warning.json',
+          fit: BoxFit.contain,
+        ),
+        actions: [
+          IconsButton(
+            onPressed: () {
+              deleteScheda(docId: docId);
+              Navigator.pop(context);
+            },
+            text: 'Sono sicuro',
+            iconData: Icons.error_outline_sharp,
+            color: Colors.yellow,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]
+    );
+  }
+
   Stream<QuerySnapshot> readItems() {
     CollectionReference collectionReference =
     FirebaseFirestore.instance
@@ -197,8 +226,17 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
     return collectionReference.snapshots();
   }
 
-  //elimina esercizio
-  void deleteEsercizio(int index) {
+  //funzione per eliminare scheda
+  Future<void> deleteScheda({
+    required String docId,
+  }) async {
+    DocumentReference documentReference =
+    FirebaseFirestore.instance.collection('workout').doc(widget.nomeScheda)
+        .collection('sessioni').doc(widget.nomeSessione)
+      .collection('esercizi').doc(docId);
+
+    await documentReference
+        .delete().whenComplete(() => print('Esercizio ${docId} eliminato con successo.')).catchError((e) => print(e));
 
   }
 
@@ -258,7 +296,9 @@ class _SchedaEserciziState extends State<SchedaEsercizi> {
                         sets: sets,
                         reps: reps,
                         peso: peso,
-                        deleteFunction: (context) => deleteEsercizio,
+                        deleteFunction: (context) async {
+                          warningMessage(nome);
+                        }
                       );
                     },
                   );

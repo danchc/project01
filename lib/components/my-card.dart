@@ -5,7 +5,7 @@ class MyCard extends StatelessWidget {
   final String descrizione;
   final Color? colore;
   final IconData? icona;
-  final int numero;
+  final String numero;
 
   const MyCard({Key? key, required this.descrizione, required this.colore, required this.icona, required this.numero}) : super(key: key);
 
@@ -61,7 +61,7 @@ class MyCard extends StatelessWidget {
               Chip(
                 backgroundColor: Colors.blueAccent,
                 label: Text(
-                  numero.toString(),
+                  numero,
                   style: const TextStyle(
                     fontFamily: 'Barlow',
                     fontWeight: FontWeight.bold,

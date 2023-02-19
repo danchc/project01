@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:lottie/lottie.dart';
 import 'package:material_dialogs/dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:mcproject/components/my-readonly-textfield.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AccountDetails extends StatefulWidget {
   AccountDetails({Key? key}) : super(key: key);
@@ -31,7 +34,7 @@ class _AccountDetailsState extends State<AccountDetails> {
   /* key form */
   final _formKey = GlobalKey<FormState>();
 
-  final String photoURL = 'assets/images/mainicon.png';
+  String photoURL = '';
 
   /* altre variabili */
   final bool readOnly = true;
@@ -42,6 +45,7 @@ class _AccountDetailsState extends State<AccountDetails> {
   void initState() {
     hide = true;
     icona = LineIcons.eye;
+    photoURL = 'https://via.placeholder.com/510x510?text=No+photo';
     super.initState();
   }
 
@@ -55,6 +59,22 @@ class _AccountDetailsState extends State<AccountDetails> {
         hide = true;
         icona = LineIcons.eye;
       }
+    });
+  }
+
+  void uploadImage() async {
+    final image = await ImagePicker()
+        .pickImage(
+          source: ImageSource.gallery,
+          maxWidth: 512,
+          maxHeight: 512,
+          imageQuality: 75
+        );
+
+    Reference ref = FirebaseStorage.instance.ref().child("profilepic.jpg");
+    await ref.putFile(File(image!.path));
+    ref.getDownloadURL().then((value) {
+      print(value);
     });
   }
 
@@ -151,12 +171,13 @@ class _AccountDetailsState extends State<AccountDetails> {
                     radius: 90,
                     child: CircleAvatar(
                       radius: 85,
-                      backgroundImage: AssetImage(photoURL),
+                      backgroundImage: NetworkImage(photoURL),
                       child: Container(
                         alignment: Alignment.bottomRight,
                         child: GestureDetector(
                           onTap: () => {
-                            log('cambia foto premuto')
+                            log('cambia foto premuto'),
+                            uploadImage(),
                           },
                           child: Container(
                             height: 50,

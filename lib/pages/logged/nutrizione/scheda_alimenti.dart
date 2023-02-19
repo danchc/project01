@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:mcproject/components/my-scheda-alimento.dart';
 import 'package:mcproject/data/nutrizione_data.dart';
 import 'package:provider/provider.dart';
@@ -157,14 +162,53 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
     return collectionReference.snapshots();
   }
 
+  //funzione per eliminare scheda
+  Future<void> deleteScheda({
+    required String docId,
+  }) async {
+    log('sono qui 1');
+    DocumentReference documentReference =
+    await FirebaseFirestore.instance.collection('nutrizione').doc(widget.nomeScheda)
+    .collection('alimento').doc(docId);
+
+    await documentReference
+        .delete().whenComplete(() => print('Alimento ${docId} eliminato con successo.')).catchError((e) => print(e));
+  }
+
+
   void clear() {
     pesoController.clear();
     nomeAlimentoController.clear();
     giornoController.clear();
   }
 
-  /* cancella alimento */
-  void cancellaAlimento() {}
+  void warningMessage(String docId) {
+    Dialogs.bottomMaterialDialog(
+        context: context,
+        color: Colors.white,
+        msg: 'Sei sicuro di voler eliminare questo elemento?',
+        title: 'Attenzione!',
+        lottieBuilder: Lottie.asset(
+          'assets/animations/warning.json',
+          fit: BoxFit.contain,
+        ),
+        actions: [
+          IconsButton(
+            onPressed: () {
+              deleteScheda(docId: docId);
+              Navigator.pop(context);
+              },
+            text: 'Sono sicuro',
+            iconData: Icons.error_outline_sharp,
+            color: Colors.yellow,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +252,9 @@ class _SchedaAlimentiState extends State<SchedaAlimenti> {
                           nomeAlimento: nome,
                           peso: peso,
                           giornoDellaSettimana: giorno,
-                          deleteFunction: (context) => cancellaAlimento
+                          deleteFunction: (context) async {
+                            warningMessage(nome);
+                          }
                       );
                     },
                   );

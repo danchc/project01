@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:lottie/lottie.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/data/allenamenti_data.dart';
 import 'package:mcproject/pages/logged/allenamenti/scheda_esercizi.dart';
@@ -103,6 +107,44 @@ class _SchedaAllenamentoState extends State<SchedaAllenamento> {
     return collectionReference.snapshots();
   }
 
+  //funzione per eliminare scheda
+  Future<void> deleteScheda({
+    required String docId,
+  }) async {
+    DocumentReference documentReference =
+    FirebaseFirestore.instance.collection('workout').doc(widget.nomeScheda)
+    .collection('sessioni').doc(docId);
+
+    await documentReference
+        .delete().whenComplete(() => print('Sessione ${docId} eliminata con successo.')).catchError((e) => print(e));
+
+  }
+
+  void warningMessage(String docId) {
+    Dialogs.bottomMaterialDialog(
+        context: context,
+        color: Colors.white,
+        msg: 'Sei sicuro di voler eliminare questo elemento?',
+        title: 'Attenzione!',
+        lottieBuilder: Lottie.asset(
+          'assets/animations/warning.json',
+          fit: BoxFit.contain,
+        ),
+        actions: [
+          IconsButton(
+            onPressed: () {
+              deleteScheda(docId: docId);
+              Navigator.pop(context);
+            },
+            text: 'Sono sicuro',
+            iconData: Icons.error_outline_sharp,
+            color: Colors.yellow,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]
+    );
+  }
 
   //metodo per entrare nei dettagli della scheda selezionata
   void goInSchedaSessione(String nomeSessione, String nomeScheda) {
@@ -152,26 +194,43 @@ class _SchedaAllenamentoState extends State<SchedaAllenamento> {
                  String nome = obj['nome'];
 
 
-                 return Padding(
-                   padding: EdgeInsets.all(20),
-                   child:
-                   ListTile(
-                     title: Text(
-                       nome,
-                       style: const TextStyle(fontWeight: FontWeight.bold,
-                           fontFamily: 'Barlow',
-                           fontSize: 23),
-                     ),
-                     tileColor: Colors.white,
-                     contentPadding: EdgeInsets.all(10),
-                     shape: RoundedRectangleBorder(borderRadius: BorderRadius
-                         .circular(10)),
-                     trailing: IconButton(
-                       icon: Icon(Icons.arrow_forward_ios),
-                       onPressed: () =>
-                       {
-                         goInSchedaSessione(nome, widget.nomeScheda)
-                       },
+                 return Container(
+                   child: Padding(
+                     padding: EdgeInsets.all(20),
+                     child:
+                     Slidable(
+                       endActionPane: ActionPane(
+                         motion: StretchMotion(),
+                         children: [
+                           SlidableAction(
+                             onPressed: (context) async {
+                               warningMessage(nome);
+                             },
+                             icon: Icons.delete_forever_rounded,
+                             backgroundColor: Colors.redAccent,
+                             borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
+                           ),
+                         ],
+                       ),
+                       child: ListTile(
+                         title: Text(
+                           nome,
+                           style: const TextStyle(fontWeight: FontWeight.bold,
+                               fontFamily: 'Barlow',
+                               fontSize: 23),
+                         ),
+                         tileColor: Colors.white,
+                         contentPadding: EdgeInsets.all(10),
+                         shape: RoundedRectangleBorder(borderRadius: BorderRadius
+                             .circular(10)),
+                         trailing: IconButton(
+                           icon: Icon(Icons.arrow_forward_ios),
+                           onPressed: () =>
+                           {
+                             goInSchedaSessione(nome, widget.nomeScheda)
+                           },
+                         ),
+                       ),
                      ),
                    ),
                  );

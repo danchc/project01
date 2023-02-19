@@ -1,13 +1,11 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icon.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/components/my-card.dart';
 import 'package:mcproject/data/allenamenti_data.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +29,38 @@ class _PrincipaleState extends State<Principale> {
 
   /* informazioni utente */
   final user = FirebaseAuth.instance.currentUser!;
+
+  /* db */
+
+  final nutrizioneCollection = FirebaseFirestore.instance.collection('nutrizione');
+  static int countWorkout = 0;
+  static int countNutrizione = 0;
+
+  /* metodo per ottenere length docs workout */
+  int readIntWorkout() {
+
+    FirebaseFirestore.instance.collection('workout').
+    get().then((value) {
+        print(value.size);
+        countWorkout = value.size;
+    });
+
+    return countWorkout;
+  }
+
+  /* metodo per ottenere length docs nutrizione */
+  int readIntNutrizione() {
+
+    FirebaseFirestore.instance.collection('nutrizione').
+    get().then((value) {
+      print(value.size);
+      countNutrizione = value.size;
+    });
+
+    return countNutrizione;
+  }
+
+
 
   ApiService client = ApiService();
 
@@ -88,7 +118,7 @@ class _PrincipaleState extends State<Principale> {
                           children: [
                             Container(
                               alignment: Alignment.center,
-                              child: ora < 13 && ora > 5?
+                              child: ora < 15 && ora > 5?
                               Row(
                                 children: [
                                   Icon(
@@ -114,7 +144,7 @@ class _PrincipaleState extends State<Principale> {
                                     color: Colors.white,
                                     size: 35,),
                                   const Text(
-                                    'Buonasera,',
+                                    ' Buonasera,',
                                     style: TextStyle(
                                       fontFamily: 'Barlow',
                                       fontSize: 32,
@@ -162,7 +192,6 @@ class _PrincipaleState extends State<Principale> {
               ),
 
 
-
               /* il tuo sommario */
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 35.0),
@@ -201,14 +230,14 @@ class _PrincipaleState extends State<Principale> {
                       descrizione: 'I tuoi allenamenti',
                       colore: Colors.white,
                       icona: Icons.sports_gymnastics,
-                      numero: Provider.of<AllenamentiData>(context, listen: false).getListaSchede().length,
+                      numero: readIntWorkout().toString(),
                     ),
 
                     MyCard(
                       descrizione: 'La tua alimentazione',
                       colore: Colors.white,
                       icona: Icons.emoji_food_beverage,
-                      numero: Provider.of<NutrizioneData>(context, listen: false).getSchedeNutrizioni().length,
+                      numero: readIntNutrizione().toString(),
                     ),
 
                   ],

@@ -6,6 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:lottie/lottie.dart';
+import 'package:material_dialogs/dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:mcproject/components/my-schedaallenamento.dart';
 import 'package:mcproject/constants/constants.dart';
 import 'package:mcproject/data/allenamenti_data.dart';
@@ -115,19 +118,50 @@ class _AllenamentiState extends State<Allenamenti> {
   void readInt() async {
     var mainCollection = await FirebaseFirestore.instance.collection('workout').get();
     final int count = mainCollection.size;
-    if(count.isGreaterThan(0)){
-      test = false;
-    }
   }
 
   //funzione per eliminare scheda
-  void deleteScheda(int index) {
+  static Future<void> deleteScheda({
+      required String docId,
+    }) async {
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('workout').doc(docId);
+
+    await documentReference
+      .delete().whenComplete(() => print('Workout ${docId} eliminato con successo.')).catchError((e) => print(e));
+
   }
 
   //funzione per andare alla prossima scheda
   void goInSchedaAllenamenti(String nomeAllenamento) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => SchedaAllenamento(nomeScheda: nomeAllenamento)));
+  }
+
+  void warningMessage(String docId) {
+    Dialogs.bottomMaterialDialog(
+        context: context,
+        color: Colors.white,
+        msg: 'Sei sicuro di voler eliminare questo elemento?',
+        title: 'Attenzione!',
+        lottieBuilder: Lottie.asset(
+          'assets/animations/warning.json',
+          fit: BoxFit.contain,
+        ),
+        actions: [
+          IconsButton(
+            onPressed: () {
+              deleteScheda(docId: docId);
+              Navigator.pop(context);
+            },
+            text: 'Sono sicuro',
+            iconData: Icons.error_outline_sharp,
+            color: Colors.yellow,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]
+    );
   }
 
 
@@ -279,7 +313,9 @@ class _AllenamentiState extends State<Allenamenti> {
                                     child: MySchedaAllenamento(
                                       nomeScheda: nome,
                                       icona: LineIcons.dumbbell,
-                                      deleteFunction: (context) => deleteScheda(index),
+                                      deleteFunction: (context) async {
+                                        warningMessage(nome);
+                                      }
                                     ),
                                   );
                                 }
