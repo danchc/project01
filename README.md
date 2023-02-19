@@ -21,7 +21,14 @@ I servizi Apple, per il momento, non sono utilizzabili. (developer account neede
 
 
 
+## Screenshots iOS
+![s1](https://i.postimg.cc/4d8TQFKT/Simulator-Screen-Shot-i-Phone-13-2023-02-19-at-19-09-13.png)
 
+![s2](https://i.postimg.cc/gjnbSqRL/Simulator-Screen-Shot-i-Phone-13-2023-02-19-at-20-22-39.png)
+
+![s3](https://i.postimg.cc/9Xnh4K5d/Simulator-Screen-Shot-i-Phone-13-2023-02-19-at-20-22-47.png)20
+
+![s4](https://i.postimg.cc/wMZ8Sycf/Simulator-Screen-Shot-i-Phone-13-2023-02-19-at-20-23-07.png)
 ## Packages utilizzati
 
 - cupertino_icons: ^1.0.2
