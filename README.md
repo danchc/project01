@@ -10,6 +10,10 @@ L'utente potrà effettuare le seguenti operazioni:
 - Possibilità di eliminazione dei dati sopra descritti;
 - Accesso ad una sezione Esplora contenente alcune notizie relative al mondo del fitness;
 
+Questa applicazione utilizza **Firebase Database** per lo storage dei dati e per l'autenticazione dell'utente, inoltre vengono utilizzati i servizi Google.
+I servizi Apple, per il momento, non sono utilizzabili. (developer account needed)
+
+
 
 
 
