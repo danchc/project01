@@ -87,7 +87,7 @@ class _AccountDetailsState extends State<AccountDetails> {
     /* verifichiamo che non ci siano errori */
     if (_formKey.currentState!.validate()) {
       /* se le password corrispondono */
-      if(passwordController.text == passwordConfirmController) {
+      if(passwordController.text == passwordConfirmController.text) {
         /* aggiorniamo i dati */
         await user.updatePassword(passwordController.text);
         Navigator.pop(context);

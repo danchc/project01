@@ -16,6 +16,8 @@ import '/components/my-square-image.dart';
 import 'package:mcproject/services/auth_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'auth_page.dart';
+
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -52,7 +54,6 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       Navigator.of(context).pop();
-      Navigator.of(context).pop();
       //prova a controllare se le credenziali sono corrette
       try {
         await FirebaseAuth
@@ -61,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
           email: emailController.text,
           password: passwordController.text,
         );
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> AuthPage()));
 
         /* controllo dati utente */
        log(FirebaseAuth.instance.currentUser!.emailVerified.toString());

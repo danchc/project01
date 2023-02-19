@@ -98,14 +98,25 @@ class _RegisterPageState extends State<RegisterPage> {
 
         }
         else {
-          showDialog(
+          Dialogs.bottomMaterialDialog(
               context: context,
-              builder: (context) {
-                return const AlertDialog(
-                  title: Text('Le password non corrispondono'),
-                  alignment: Alignment.center,
-                );
-              }
+              color: Colors.white,
+              msg: 'Le password non corrispondono',
+              title: 'Errore!',
+              lottieBuilder: Lottie.asset(
+                'assets/animations/lottie2.json',
+                fit: BoxFit.contain,
+              ),
+              actions: [
+                IconsButton(
+                  onPressed: () {Navigator.pop(context);},
+                  text: 'Riprova',
+                  iconData: Icons.error_outline_sharp,
+                  color: Colors.red,
+                  textStyle: TextStyle(color: Colors.white),
+                  iconColor: Colors.white,
+                ),
+              ]
           );
         }
       } on FirebaseAuthException catch (e) {
